@@ -7,4 +7,12 @@
         values
         (#{code},#{name},#{sex},#{age},#{price},#{type},#{remark},#{attention})
     </insert>
+    <select id="findPage" resultType="com.hl.travel.entity.TravelItem">
+        select * from t_travelitem
+        <where>
+            <if test="queryString != null and queryString.length > 0">
+                 name like '%'#{queryString}'%' or code = #{queryString}
+            </if>
+        </where>
+    </select>
 </mapper>

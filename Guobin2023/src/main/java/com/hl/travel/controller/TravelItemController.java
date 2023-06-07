@@ -3,6 +3,8 @@ package com.hl.travel.controller;
 import com.hl.travel.Service.TravelItemService;
 import com.hl.travel.constant.MessageConstant;
 import com.hl.travel.entity.TravelItem;
+import com.hl.travel.vo.PageResult;
+import com.hl.travel.vo.QueryPageBean;
 import com.hl.travel.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -27,6 +29,16 @@ public class TravelItemController {
             return new Result(false, MessageConstant.ADD_TRAVELITEM_FAIL);
         }
         return new Result(true, MessageConstant.ADD_TRAVELITEM_SUCCESS);
+    }
+
+    @RequestMapping("/findPage")
+    public PageResult findPage(@RequestBody QueryPageBean queryPageBean){
+        PageResult pageResult = travelItemService.findPage(
+                queryPageBean.getCurrentPage(),
+                queryPageBean.getPageSize(),
+                queryPageBean.getQueryString());
+        return pageResult;
+
     }
 }
 
