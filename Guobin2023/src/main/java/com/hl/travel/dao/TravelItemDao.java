@@ -11,4 +11,12 @@ public interface TravelItemDao {
     void add(TravelItem travelItem);
 
     Page<TravelItem> findPage(@Param("queryString") String queryString);
+
+    long findCountByTravelItemItemId(Integer id);
+
+    void deleteById(Integer id);
+
+    void edit(TravelItem travelItem);
+
+    TravelItem findById(Integer id);
 }
