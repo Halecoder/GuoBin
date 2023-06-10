@@ -14,7 +14,7 @@ import java.util.*;
 public class B2Utils {
 
 
-    public void uploadFile(String Command, String bucketName, String filePath, String fileName) throws B2Exception, IOException, B2JsonException {
+    public static void uploadFile(String Command, String bucketName, String filePath, String fileName) throws B2Exception, IOException, B2JsonException {
 
 
 //        组织文件命令
@@ -41,7 +41,7 @@ public class B2Utils {
     }
 
 
-    public void deleteFile(String Command, String bucketName, String fileName) throws B2Exception, IOException, B2JsonException {
+    public static void deleteFile(String Command, String bucketName, String fileName) throws B2Exception, IOException, B2JsonException {
 
 
         //        根据文件名获取文件id
@@ -68,7 +68,7 @@ public class B2Utils {
     }
 
 
-    public B2FileVersion getFileVersion(String bucketName, String fileName) throws B2Exception, IOException, B2JsonException {
+    public static B2FileVersion getFileVersion(String bucketName, String fileName) throws B2Exception, IOException, B2JsonException {
         //        组织文件命令
         String[] args = new String[6];
 

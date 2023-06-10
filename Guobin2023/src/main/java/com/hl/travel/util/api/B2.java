@@ -679,8 +679,6 @@ public class B2 implements AutoCloseable{
     public B2FileVersion upload_file(String[] args,
                             boolean forceLarge) throws B2Exception, IOException {
         B2UploadFileRequest request = makeUploadRequestFromArgs(args);
-
-
         final long contentLength = request.getContentSource().getContentLength();
         B2FileVersion b2FileVersion = null;
         if (forceLarge || client.getFilePolicy().shouldBeLargeFile(contentLength)) {
