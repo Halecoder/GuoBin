@@ -3,6 +3,8 @@ package com.hl.travel.Service;
 import com.hl.travel.entity.TravelItem;
 import com.hl.travel.vo.PageResult;
 
+import java.util.List;
+
 public interface TravelItemService {
     void add(TravelItem travelItem);
 
@@ -13,4 +15,6 @@ public interface TravelItemService {
     void edit(TravelItem travelItem);
 
     TravelItem findById(Integer id);
+
+    List<TravelItem> findAllItem();
 }

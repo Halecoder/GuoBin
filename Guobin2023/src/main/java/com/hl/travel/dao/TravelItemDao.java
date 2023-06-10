@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 
 public interface TravelItemDao {
     void add(TravelItem travelItem);
@@ -19,4 +21,6 @@ public interface TravelItemDao {
     void edit(TravelItem travelItem);
 
     TravelItem findById(Integer id);
+
+    List<TravelItem> findAllItem();
 }

@@ -65,4 +65,10 @@
     <select id="findTravelItemIdByTravelGroupId" resultType="java.lang.Integer">
         select travelitem_id from t_travelgroup_travelitem where travelgroup_id = #{id}
     </select>
+    <select id="findAll" resultType="com.hl.travel.entity.TravelGroup">
+        select * from t_travelgroup
+    </select>
+    <select id="findCountByTravelGroupGroupId" resultType="java.lang.Long">
+        select count(*) from  t_setmeal_travelgroup where travelgroup_id = #{id}
+    </select>
 </mapper>

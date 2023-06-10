@@ -54,4 +54,7 @@
     <select id="findById" resultType="com.hl.travel.entity.TravelItem">
         select * from t_travelitem where id = #{id}
     </select>
+    <select id="findAllItem" resultType="com.hl.travel.entity.TravelItem">
+        select * from t_travelitem
+    </select>
 </mapper>

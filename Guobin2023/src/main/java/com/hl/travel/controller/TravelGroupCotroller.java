@@ -73,9 +73,6 @@ public class TravelGroupCotroller {
 
     @RequestMapping("/delete")
     public Result delete(Integer id) {
-
-
-
         try {
             travelGroupService.deleteById(id);
             return new Result(true, MessageConstant.DELETE_TRAVELGROUP_SUCCESS);
@@ -86,6 +83,15 @@ public class TravelGroupCotroller {
             e.printStackTrace();
             return new Result(false, MessageConstant.DELETE_TRAVELGROUP_FAIL);
         }
+    }
+
+    /**
+     * @return 查询所有跟团游
+     */
+    @RequestMapping("/findAll")
+    public Result findAll(){
+        List<TravelGroup> travelGroups = travelGroupService.findAll();
+        return new Result(true,MessageConstant.QUERY_TRAVELGROUP_SUCCESS,travelGroups);
     }
 
 

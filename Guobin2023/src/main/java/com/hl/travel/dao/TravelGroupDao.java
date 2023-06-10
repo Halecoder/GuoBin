@@ -25,4 +25,8 @@ public interface TravelGroupDao {
     void deleteTravelGroupAndTravelItem(Integer id);
 
     void deleteById(Integer id);
+
+    List<TravelGroup> findAll();
+
+    long findCountByTravelGroupGroupId(Integer id);
 }

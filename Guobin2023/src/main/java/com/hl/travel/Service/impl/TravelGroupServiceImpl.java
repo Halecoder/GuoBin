@@ -63,10 +63,23 @@ public class TravelGroupServiceImpl implements TravelGroupService {
 
     @Override
     public void deleteById(Integer id) {
+        // 在删除跟团游之前，先判断跟团游的id，在中间表中是否存在数据
+        long count =  travelGroupDao.findCountByTravelGroupGroupId(id);
+        // 中间表如果有数据，不要往后面执行，直接抛出异常
+        // 如果非要删除也可以：delete from t_travelgroup_travelitem where travelitem_id = 1
+        if (count>0){
+            throw new RuntimeException("不允许删除");
+        }
 
         travelGroupDao.deleteTravelGroupAndTravelItem(id);
         travelGroupDao.deleteById(id);
 
+    }
+
+    @Override
+    public List<TravelGroup> findAll() {
+
+        return travelGroupDao.findAll();
     }
 
     private void setTravelGroupAndTravelItem(Integer travelGroupId, Integer[] travelItemIds) {

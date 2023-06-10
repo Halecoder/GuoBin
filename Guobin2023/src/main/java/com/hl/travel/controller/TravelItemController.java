@@ -95,6 +95,11 @@ public class TravelItemController {
         return new Result(true,MessageConstant.QUERY_TRAVELITEM_SUCCESS,travelItem);
     }
 
+    @RequestMapping("/findAllItem")
+    public Result findAllItem(){
+        return new Result(true,MessageConstant.QUERY_TRAVELITEM_SUCCESS,travelItemService.findAllItem());
+    }
+
 
 }
 
