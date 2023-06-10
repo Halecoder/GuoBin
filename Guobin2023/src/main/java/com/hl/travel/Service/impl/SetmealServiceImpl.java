@@ -3,6 +3,7 @@ package com.hl.travel.Service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.hl.travel.Service.SetmealService;
+import com.hl.travel.constant.RedisConstant;
 import com.hl.travel.dao.SetmealDao;
 import com.hl.travel.entity.Setmeal;
 import com.hl.travel.entity.TravelGroup;
@@ -10,6 +11,7 @@ import com.hl.travel.vo.PageResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import redis.clients.jedis.JedisPool;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +23,8 @@ import java.util.Map;
 public class SetmealServiceImpl implements SetmealService {
 
     private final SetmealDao setmealDao;
+
+    private  final  JedisPool jedisPool;
 
     @Override
     public void upload() {
@@ -46,7 +50,15 @@ public class SetmealServiceImpl implements SetmealService {
 
         addSetmealAndTravelGroup(setmeal.getId(), travelgroupIds);
 
+        //将图片名称保存到Redis
+        savePicToRedis(setmeal.getImg());
 
+
+    }
+
+    //将图片名称保存到Redis
+    private void savePicToRedis(String pic){
+        jedisPool.getResource().sadd(RedisConstant.SETMEAL_PIC_DB_RESOURCES,pic);
     }
 
     @Override
@@ -69,6 +81,9 @@ public class SetmealServiceImpl implements SetmealService {
         setmealDao.deleteSetmealAndTravelGroup(setmeal.getId());
         // 3：添加新的关系
         addSetmealAndTravelGroup(setmeal.getId(), travelgroupIds);
+
+        //将图片名称保存到Redis
+        savePicToRedis(setmeal.getImg());
     }
 
     @Override

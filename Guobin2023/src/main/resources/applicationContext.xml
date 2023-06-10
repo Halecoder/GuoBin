@@ -17,6 +17,12 @@
 
     <context:property-placeholder location="classpath:*.properties"/>
 
+    <!-- 导入reis配置文件 -->
+    <import resource="classpath:applicationContext-redis.xml"></import>
+
+    <!-- 导入quartz配置文件 -->
+    <import resource="classpath:applicationContext-jobs.xml"></import>
+
     <!--
         配置数据源 ： Druid
     -->

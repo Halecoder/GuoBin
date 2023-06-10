@@ -6,6 +6,7 @@ import com.backblaze.b2.json.B2JsonException;
 import com.hl.travel.Service.SetmealService;
 import com.hl.travel.Service.TravelGroupService;
 import com.hl.travel.constant.MessageConstant;
+import com.hl.travel.constant.RedisConstant;
 import com.hl.travel.constant.S3Constant;
 import com.hl.travel.entity.Setmeal;
 import com.hl.travel.entity.TravelGroup;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import redis.clients.jedis.JedisPool;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,6 +37,8 @@ import java.util.UUID;
 public class SetmealController {
 
     private final SetmealService setmealService;
+
+    private final JedisPool jedisPool;
 
     @RequestMapping("/upload")
     public Result upload(MultipartFile imgFile) {
@@ -69,8 +73,14 @@ public class SetmealController {
             } catch (B2JsonException e) {
                 throw new RuntimeException(e);
             }
+
+
             //图片上传成功
             Result result = new Result(true, MessageConstant.PIC_UPLOAD_SUCCESS, fileName);
+
+            //将上传图片名称存入Redis，基于Redis的Set集合存储
+            jedisPool.getResource().sadd(RedisConstant.SETMEAL_PIC_RESOURCES,fileName);
+
             return result;
         } catch (IOException e) {
             e.printStackTrace();
