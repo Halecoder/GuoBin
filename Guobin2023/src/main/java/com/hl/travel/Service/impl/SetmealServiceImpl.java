@@ -26,10 +26,6 @@ public class SetmealServiceImpl implements SetmealService {
 
     private  final  JedisPool jedisPool;
 
-    @Override
-    public void upload() {
-
-    }
 
     @Override
     public PageResult findPage(Integer currentPage, Integer pageSize, String queryString) {

@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface SetmealService {
 
-        void upload();
 
     PageResult findPage(Integer currentPage, Integer pageSize, String queryString);
 

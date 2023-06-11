@@ -11,6 +11,7 @@ import com.hl.travel.constant.S3Constant;
 import com.hl.travel.entity.Setmeal;
 import com.hl.travel.entity.TravelGroup;
 import com.hl.travel.util.B2Utils;
+import com.hl.travel.util.FileUtils;
 import com.hl.travel.util.QiniuUtils;
 import com.hl.travel.vo.PageResult;
 import com.hl.travel.vo.QueryPageBean;
@@ -26,6 +27,7 @@ import redis.clients.jedis.JedisPool;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -42,9 +44,22 @@ public class SetmealController {
 
     @RequestMapping("/upload")
     public Result upload(MultipartFile imgFile) {
+
+        //获取原始文件名
+        String originalFilename = imgFile.getOriginalFilename();
+        // 找到.最后出现的位置
+        int lastIndexOf = originalFilename.lastIndexOf(".");
+        //获取文件后缀
+        String suffix = originalFilename.substring(lastIndexOf);
+        //使用UUID随机产生文件名称，防止同名文件覆盖
+        String fileName = UUID.randomUUID().toString() + suffix;
+
         try {
-            //获取原始文件名
-            String originalFilename = imgFile.getOriginalFilename();
+
+            // 防止图片重复上传
+            if (FileUtils.checkRedisFileHash(imgFile)) {
+                return new Result(false, MessageConstant.PIC_RAPID_UPLOAD);
+            }
 
             File tempFile = File.createTempFile("upload-", ".tmp");
             imgFile.transferTo(tempFile);
@@ -53,14 +68,9 @@ public class SetmealController {
             String tempFilePath = tempFile.getAbsolutePath();
             System.out.println("临时文件路径：" + tempFilePath);
 
-            // 找到.最后出现的位置
-            int lastIndexOf = originalFilename.lastIndexOf(".");
-            //获取文件后缀
-            String suffix = originalFilename.substring(lastIndexOf);
-            //使用UUID随机产生文件名称，防止同名文件覆盖
-            String fileName = UUID.randomUUID().toString() + suffix;
+
             try {
-                B2Utils.uploadFile(S3Constant.UPLOAD_FILE,S3Constant.BUCKET_NAME,tempFilePath,fileName);
+                B2Utils.uploadFile(S3Constant.UPLOAD_FILE, S3Constant.BUCKET_NAME, tempFilePath, fileName);
 
                 // 处理完临时文件后，手动删除
                 if (tempFile.exists()) {
@@ -79,16 +89,14 @@ public class SetmealController {
             Result result = new Result(true, MessageConstant.PIC_UPLOAD_SUCCESS, fileName);
 
             //将上传图片名称存入Redis，基于Redis的Set集合存储
-            jedisPool.getResource().sadd(RedisConstant.SETMEAL_PIC_RESOURCES,fileName);
+            jedisPool.getResource().sadd(RedisConstant.SETMEAL_PIC_RESOURCES, fileName);
 
             return result;
-        } catch (IOException e) {
+        } catch (IOException | NoSuchAlgorithmException e) {
             e.printStackTrace();
-            return new Result(false,MessageConstant.PIC_UPLOAD_FAIL);
+            return new Result(false, MessageConstant.PIC_UPLOAD_FAIL);
         }
     }
-
-
 
 
     @RequestMapping("/findPage")
@@ -113,6 +121,7 @@ public class SetmealController {
 
     /**
      * 根据id查询套餐信息
+     *
      * @param id 套餐id
      * @return
      */
@@ -125,6 +134,7 @@ public class SetmealController {
 
     /**
      * 根据套餐id查询跟团游的id
+     *
      * @param id 套餐id
      * @return
      */

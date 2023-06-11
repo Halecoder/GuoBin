@@ -11,6 +11,9 @@ import com.sun.tools.javadoc.resources.javadoc;
 import java.io.*;
 import java.util.*;
 
+/**
+ * BlackBlaze B2云存储工具类
+ */
 public class B2Utils {
 
 
