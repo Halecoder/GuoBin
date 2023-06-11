@@ -8,4 +8,5 @@ public class RedisConstant {
 
     //套餐图片的所有图片名称（实现幂等性，防止重复提交）
     public static final String SETMEAL_PIC_UNIQUE_ID = "setmealPicUniqueId";
+    public static final String SETMEAL_PIC_HASH_ID = "setmealPicHashId";
 }

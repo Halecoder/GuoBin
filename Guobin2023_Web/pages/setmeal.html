@@ -313,7 +313,7 @@
               title="编辑套餐游"
               :visible.sync="dialogFormVisible4Edit"
             >
-              <template>
+              <template slot-scope="scope">
                 <el-tabs v-model="activeName" type="card">
                   <el-tab-pane label="基本信息" name="first">
                     <el-form
@@ -368,7 +368,7 @@
                           <el-form-item label="上传图片">
                             <el-upload
                               class="avatar-uploader"
-                              action="http://localhost:82/setmeal/upload.do"
+                              :action="uploadUrl"
                               :auto-upload="autoUpload"
                               name="imgFile"
                               :show-file-list="false"
@@ -474,6 +474,8 @@
         travelgroupIds: [], //添加表单窗口中跟团游复选框对应id
         dialogFormVisible: false, //控制添加窗口显示/隐藏
         dialogFormVisible4Edit: false, //控制编辑窗口显示/隐藏
+
+        uploadUrl: "http://localhost:82/setmeal/upload.do", //图片上传的地址
       },
       created() {
         this.findPage();
@@ -481,17 +483,19 @@
       methods: {
         //文件上传成功后的钩子，response为服务端返回的值，file为当前上传的文件封装成的js对象
         handleAvatarSuccess(response, file) {
-          // 对imageUrl赋值，将图片显示到文件上传的框中，进行浏览
-          this.imageUrl = "https://guobin.s3.us-west-004.backblazeb2.com/" + response.data; // 用于显示
-          this.$message({
-            message: response.message,
-            type: response.flag ? "success" : "error",
-          });
-          //设置模型数据（图片名称），后续提交ajax请求时会提交到后台最终保存到数据库
-          this.formData.img = response.data; // 用于保存
+          if (response.flag) {
+            // 对imageUrl赋值，将图片显示到文件上传的框中，进行浏览
+            this.imageUrl =
+              "https://guobin.s3.us-west-004.backblazeb2.com/" + response.data; // 用于显示
+            //设置模型数据（图片名称），后续提交ajax请求时会提交到后台最终保存到数据库
+            this.formData.img = response.data; // 用于保存
+          } else {
+            this.$message.error(response.message);
+          }
         },
         //上传图片之前执行
         beforeAvatarUpload(file) {
+
           const isJPG = file.type === "image/jpeg";
           const isLt2M = file.size / 1024 / 1024 < 2;
           if (!isJPG) {
@@ -506,7 +510,11 @@
         handleAdd() {
           //提交添加表单
           axios
-            .post("http://localhost:82/setmeal/add.do?travelgroupIds="+this.travelgroupIds,this.formData)
+            .post(
+              "http://localhost:82/setmeal/add.do?travelgroupIds=" +
+                this.travelgroupIds,
+              this.formData
+            )
             .then((response) => {
               //隐藏添加窗口
               this.dialogFormVisible = false;
@@ -529,7 +537,11 @@
         handleEdit() {
           //提交添加表单
           axios
-            .post("http://localhost:82/setmeal/edit.do?travelgroupIds="+this.travelgroupIds, this.formData)
+            .post(
+              "http://localhost:82/setmeal/edit.do?travelgroupIds=" +
+                this.travelgroupIds,
+              this.formData
+            )
             .then((response) => {
               //隐藏添加窗口
               this.dialogFormVisible4Edit = false;
@@ -553,6 +565,11 @@
           // 1.弹出窗口
           this.dialogFormVisible4Edit = true;
           this.activeName = "first";
+
+          //更改图片上传的地址
+          this.uploadUrl =
+            "http://localhost:82/setmeal/upload.do?id=" + row.id;
+
           // 2.查询套餐基本信息
           axios
             .get("http://localhost:82/setmeal/findById.do?id=" + row.id)
@@ -561,7 +578,8 @@
               this.formData = response.data.data;
               // 4.将套餐基本信息中的图片名称赋值给imageUrl
               this.imageUrl =
-                "https://guobin.s3.us-west-004.backblazeb2.com/" + response.data.data.img;
+                "https://guobin.s3.us-west-004.backblazeb2.com/" +
+                response.data.data.img;
             });
           // 5.查询套餐
           axios

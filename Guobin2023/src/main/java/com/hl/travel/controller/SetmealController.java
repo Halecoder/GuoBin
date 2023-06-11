@@ -43,7 +43,7 @@ public class SetmealController {
     private final JedisPool jedisPool;
 
     @RequestMapping("/upload")
-    public Result upload(MultipartFile imgFile) {
+    public Result upload(MultipartFile imgFile,Integer id) {
 
         //获取原始文件名
         String originalFilename = imgFile.getOriginalFilename();
@@ -55,9 +55,12 @@ public class SetmealController {
         String fileName = UUID.randomUUID().toString() + suffix;
 
         try {
-
-            // 防止图片重复上传
-            if (FileUtils.checkRedisFileHash(imgFile)) {
+            if(id==null){
+                id = 0;
+            }
+            // 防止图片重复上传 新建时id为0 编辑时id为当前行id
+            //id相同且hash相同则为重复上传 id不同则可以上传
+            if (FileUtils.checkRedisFileHash(imgFile,id)) {
                 return new Result(false, MessageConstant.PIC_RAPID_UPLOAD);
             }
 

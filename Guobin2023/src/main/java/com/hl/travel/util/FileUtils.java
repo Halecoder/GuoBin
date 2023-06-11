@@ -12,6 +12,7 @@ import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.UUID;
 
 /**
  * 文件工具类
@@ -53,25 +54,32 @@ public class FileUtils {
 
 
     //查看Redis是否存在该文件Hash值
-    public static boolean checkRedisFileHash(MultipartFile imgFile) throws IOException, NoSuchAlgorithmException {
+    public static boolean checkRedisFileHash(MultipartFile imgFile,Integer id) throws IOException, NoSuchAlgorithmException {
 
         String hash = FileUtils.calculateFileHash(imgFile);
 
+
+        //唯一的key
+        String IdKey = RedisConstant.SETMEAL_PIC_UNIQUE_ID;
+        String HashKey = RedisConstant.SETMEAL_PIC_HASH_ID;
+
         //如果Redis没有存该Key,进行存储
-        if (!(fileUtils.jedisPool.getResource().exists(RedisConstant.SETMEAL_PIC_UNIQUE_ID))) {
+        if (!(fileUtils.jedisPool.getResource().exists(HashKey))) {
             // 创建一个String
-            fileUtils.jedisPool.getResource().set(RedisConstant.SETMEAL_PIC_UNIQUE_ID, hash);
+            fileUtils.jedisPool.getResource().set(HashKey, hash);
+            //创建唯一标识Id
+            fileUtils.jedisPool.getResource().set(IdKey, String.valueOf(id));
             return false;
 
         } else {
 
             //检查Hash值是否相同
-            if (fileUtils.jedisPool.getResource().get(RedisConstant.SETMEAL_PIC_UNIQUE_ID).equals(hash)) {
+            if (fileUtils.jedisPool.getResource().get(HashKey).equals(hash)&&fileUtils.jedisPool.getResource().get(IdKey).equals(String.valueOf(id))) {
                 return true;
             } else {
                 //如果不相同,进行更新
-                fileUtils.jedisPool.getResource().set(RedisConstant.SETMEAL_PIC_UNIQUE_ID, hash);
-
+                fileUtils.jedisPool.getResource().set(HashKey, hash);
+                fileUtils.jedisPool.getResource().set(IdKey, String.valueOf(id));
                 return false;
             }
         }
