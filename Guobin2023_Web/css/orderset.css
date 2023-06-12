@@ -98,7 +98,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    
+
 }
 
 .days li {
@@ -199,7 +199,7 @@
     top: 14px;
 }
 .el-upload--text .el-button {
-    background: #98FB98;
+    background: #f56c6c;
     border: none
 }
 
@@ -270,7 +270,7 @@
 
 .clearfix {clear: both}
 .month .currentdate { float: left}
-.month .choose { 
+.month .choose {
     float: right;
     line-height: 57px;
     padding-right: 30px;

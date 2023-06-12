@@ -227,7 +227,7 @@
                           <el-form-item label="上传图片">
                             <el-upload
                               class="avatar-uploader"
-                              action="http://localhost:82/setmeal/upload.do"
+                              action="http://localhost:82/setmeal/upload.do?id=0"
                               :auto-upload="autoUpload"
                               name="imgFile"
                               :show-file-list="false"
@@ -580,6 +580,7 @@
               this.imageUrl =
                 "https://guobin.s3.us-west-004.backblazeb2.com/" +
                 response.data.data.img;
+
             });
           // 5.查询套餐
           axios

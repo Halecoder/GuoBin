@@ -55,9 +55,6 @@ public class SetmealController {
         String fileName = UUID.randomUUID().toString() + suffix;
 
         try {
-            if(id==null){
-                id = 0;
-            }
             // 防止图片重复上传 新建时id为0 编辑时id为当前行id
             //id相同且hash相同则为重复上传 id不同则可以上传
             if (FileUtils.checkRedisFileHash(imgFile,id)) {
