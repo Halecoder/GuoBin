@@ -29,4 +29,12 @@ public interface TravelGroupDao {
     List<TravelGroup> findAll();
 
     long findCountByTravelGroupGroupId(Integer id);
+
+    /**
+     * 根据跟团游Id查套餐游Id
+     * @param id
+     * @return
+     */
+    List<TravelGroup> findTravelGroupListById(Integer id);
+
 }

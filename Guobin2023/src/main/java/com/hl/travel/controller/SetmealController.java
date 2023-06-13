@@ -163,4 +163,28 @@ public class SetmealController {
         }
         return new Result(true, MessageConstant.DELETE_SETMEAL_SUCCESS);
     }
+
+
+    /**
+     * @return 移动端获取数据
+     */
+    @RequestMapping("/getSetmeal")
+    public Result getSetmeal (){
+
+        List<Setmeal> setmeals = setmealService.findAll();
+
+        return new Result(true,MessageConstant.GET_SETMEAL_LIST_SUCCESS,setmeals);
+
+    }
+
+
+    @RequestMapping("/findDescById")
+    public Result findDescById(Integer id){
+        //进行预约
+       Setmeal setmeal =  setmealService.findDescById(id);
+
+        return new Result(true,MessageConstant.QUERY_ORDER_SUCCESS,setmeal);
+
+    }
+
 }

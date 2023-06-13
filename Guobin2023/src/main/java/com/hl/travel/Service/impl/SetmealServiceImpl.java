@@ -5,6 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.hl.travel.Service.SetmealService;
 import com.hl.travel.constant.RedisConstant;
 import com.hl.travel.dao.SetmealDao;
+import com.hl.travel.dao.TravelGroupDao;
 import com.hl.travel.entity.Setmeal;
 import com.hl.travel.entity.TravelGroup;
 import com.hl.travel.vo.PageResult;
@@ -13,9 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import redis.clients.jedis.JedisPool;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +22,7 @@ import java.util.Map;
 public class SetmealServiceImpl implements SetmealService {
 
     private final SetmealDao setmealDao;
+
 
     private  final  JedisPool jedisPool;
 
@@ -89,6 +89,36 @@ public class SetmealServiceImpl implements SetmealService {
         // 2：删除套餐
         setmealDao.deleteById(id);
 
+    }
+
+    @Override
+    public List<Setmeal> findAll() {
+
+       return setmealDao.findAll();
+
+    }
+
+    @Override
+    public Setmeal findDescById(Integer id) {
+
+//        自己封装很繁琐，需要对Setmeal一个个字段进行set，很麻烦，直接使用
+//        mybatis进行封装
+
+
+//        Setmeal setmeal = new Setmeal();
+//
+//        //中间表查出GroupIds
+//      List<Integer> ids =  setmealDao.findTravelGroupIdsBySetmealId(id);
+//
+//      List<TravelGroup> travelGroups = new ArrayList<>();
+//
+//      for (Integer groupId : ids){
+//          //根据Id查Group表详细信息
+//          travelGroups.add(travelGroupDao.findById(groupId));
+//      }
+//      setmeal.setTravelGroups(travelGroups);
+
+       return setmealDao.findDescById(id);
     }
 
     private void addSetmealAndTravelGroup(Integer id, Integer[] travelgroupIds) {

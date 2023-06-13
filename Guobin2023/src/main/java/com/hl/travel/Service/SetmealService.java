@@ -19,4 +19,8 @@ public interface SetmealService {
     void edit(Setmeal setmeal, Integer[] travelgroupIds);
 
     void deleteById(Integer id);
+
+    List<Setmeal> findAll();
+
+    Setmeal findDescById(Integer id);
 }

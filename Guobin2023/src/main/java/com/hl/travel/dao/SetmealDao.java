@@ -24,4 +24,8 @@ public interface SetmealDao {
     void deleteSetmealAndTravelGroup(Integer id);
 
     void deleteById(Integer id);
+
+    List<Setmeal> findAll();
+
+    Setmeal findDescById(Integer id);
 }

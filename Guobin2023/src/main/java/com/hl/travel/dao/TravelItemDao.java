@@ -23,4 +23,11 @@ public interface TravelItemDao {
     TravelItem findById(Integer id);
 
     List<TravelItem> findAllItem();
+
+    /**
+     * 根据套餐游Id查自由行id
+     * @param id
+     * @return
+     */
+    List<TravelItem>  findTravelItemListById(Integer id);
 }

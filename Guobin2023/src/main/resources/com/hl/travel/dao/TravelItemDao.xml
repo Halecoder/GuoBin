@@ -57,4 +57,8 @@
     <select id="findAllItem" resultType="com.hl.travel.entity.TravelItem">
         select * from t_travelitem
     </select>
+    <!--根据跟团游id查询自由行信息-->
+    <select id="findTravelItemListById" resultType="com.hl.travel.entity.TravelItem" parameterType="int">
+    select * from t_travelitem where id in (select travelitem_id from t_travelgroup_travelitem where travelgroup_id=#{id})
+    </select>
 </mapper>
