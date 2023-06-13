@@ -20,7 +20,7 @@ public class SMSUtils {
         String path = "/data/send_sms";
         String method = "POST";
         // 修改为自己购买的appcode
-        String appcode = "9d4d61a023e5459d97dddeb6227360d8";
+        String appcode = "133fd75fb8b84c9582efb93afa19051b";
         Map<String, String> headers = new HashMap<String, String>();
         //最后在header中的格式(中间是英文空格)为Authorization:APPCODE 83359fd73fe94948385f570e3c139105
         headers.put("Authorization", "APPCODE " + appcode);
@@ -30,7 +30,7 @@ public class SMSUtils {
         Map<String, String> bodys = new HashMap<String, String>();
         bodys.put("content", "code:"+code);
         bodys.put("phone_number", phoneNumber);
-        bodys.put("template_id", "TPL_0000");
+        bodys.put("template_id", "CST_ptdie100");
 
         try {
             /**

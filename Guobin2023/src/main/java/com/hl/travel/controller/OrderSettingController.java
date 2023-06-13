@@ -1,6 +1,7 @@
 package com.hl.travel.controller;
 
 
+import com.hl.travel.Service.OrderMobileService;
 import com.hl.travel.Service.OrderSettingService;
 import com.hl.travel.constant.MessageConstant;
 import com.hl.travel.entity.OrderSetting;
@@ -27,6 +28,8 @@ import java.util.Map;
 public class OrderSettingController {
 
     private final OrderSettingService orderSettingService;
+
+    private final OrderMobileService orderMobileService;
 
     @RequestMapping("/upload")
     public Result upload(MultipartFile excelFile) {
@@ -82,5 +85,7 @@ public class OrderSettingController {
             orderSettingService.editNumberByDate(orderSetting);
             return new Result(true,MessageConstant.ORDERSETTING_SUCCESS);
     }
+
+
 
 }

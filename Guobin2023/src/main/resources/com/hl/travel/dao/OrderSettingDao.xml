@@ -11,6 +11,11 @@
         set number=#{number}
         where orderDate=#{orderDate}
     </update>
+    <update id="editReservationsByOrderDate">
+        update t_ordersetting
+        set reservations=#{reservations}
+        where orderDate=#{orderDate}
+    </update>
 
     <select id="findCountByOrderDate" parameterType="java.util.Date" resultType="long">
         select count(*) from t_ordersetting where orderDate=#{orderDate}
@@ -18,6 +23,9 @@
     <select id="getOrderSettingByMonth" resultType="java.util.Map">
         select * from t_ordersetting where orderDate between #{dateBegin} and #{dateEnd}
 
+    </select>
+    <select id="findByOrderDate" resultType="com.hl.travel.entity.OrderSetting">
+        select * from t_ordersetting where orderDate=#{orderDate}
     </select>
 
 

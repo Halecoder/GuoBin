@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hl.travel.dao.TravelGroupDao">
-
-
     <resultMap type="com.hl.travel.entity.TravelGroup" id="findByIdResultMap">
     <id column="id" property="id"/>
     <result column="name" property="name"/>
@@ -29,13 +27,14 @@
         <!--在新增SQL语句之后执行select last_insert_id(), 返回int类型的值，封装到travelGroup中的id属性中
           或者
           在insert标签上增加 useGeneratedKeys="true" keyProperty="id",将生成的主键值封装到travelGroup中的id属性中
--->
+        -->
         <selectKey keyProperty="id" resultType="int" order="AFTER">
             select last_insert_id()
         </selectKey>
         insert into t_travelgroup(code,name,helpCode,sex,remark,attention) values
         (#{code},#{name},#{helpCode},#{sex},#{remark},#{attention})
     </insert>
+
     <!--编辑跟团游-->
     <update id="edit" parameterType="com.hl.travel.entity.TravelGroup">
         update t_travelgroup

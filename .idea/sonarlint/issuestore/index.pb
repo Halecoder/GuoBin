@@ -3,8 +3,6 @@ e
 5Guobin2023/src/main/java/com/hl/travel/vo/Result.java,0\b\0b7e8e351667e699dfc558f3fcf176bb0c6d0a06
 9
 	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
-n
->Guobin2023/src/main/java/com/hl/travel/entity/TravelGroup.java,f\9\f99b676287d6bd824bfab2d63ce53651ecb484ac
 D
 Guobin2023/README.md,b\4\b42938e54f204059c235d1ff00a91e3a6f851630
 w
@@ -31,8 +29,6 @@ V
 &Guobin2023/src/test/java/BaseTest.java,d\0\d09920273d831fa36119c550814c022e3d26a6c7
 l
 <Guobin2023/src/main/java/com/hl/travel/vo/QueryPageBean.java,7\7\77fee98cffb70cdcd3018b796715c4be5a398eeb
-j
-:Guobin2023/src/main/java/com/hl/travel/entity/Setmeal.java,1\5\15993be210ac88426f0ebe012e34a8aab90c2dcd
 p
 @Guobin2023/src/main/java/com/hl/travel/config/OpenApiConfig.java,4\d\4d7b6bfae8cd1b8f40488500d6e16e686a7a83c5
 v
@@ -45,10 +41,6 @@ OGuobin2023/src/main/java/com/hl/travel/Service/impl/TravelGroupServiceImpl.java
 NGuobin2023/src/main/java/com/hl/travel/Service/impl/TravelItemServiceImpl.java,2\8\28d697c612f7a0095c1f3104cd28f25f8524ea11
 {
 KGuobin2023/src/main/java/com/hl/travel/controller/TravelItemController.java,8\9\89693c55db90a3512c64f1b455dfd3a4d494dfd4
-n
->Guobin2023/src/main/java/com/hl/travel/dao/TravelGroupDao.java,9\9\99fed9faaa4b805692adecc0d75e2d021803cc12
-m
-=Guobin2023/src/main/java/com/hl/travel/dao/TravelItemDao.java,d\a\daffe484193cd9e1e126a29536f12a5e7a1ab88a
 U
 %Guobin2023_Web/pages/travelgroup.html,b\9\b9402bd98fcf8bad2175e202bd8d7381a3c7f5a5
 Z
@@ -57,8 +49,6 @@ Z
 *Guobin2023/src/main/webapp/WEB-INF/web.xml,3\1\31cb97ba7b1632867bbc346dda7beb2f49410f22
 r
 BGuobin2023/src/main/java/com/hl/travel/util/ValidateCodeUtils.java,f\9\f966689c21811dea606aaf01872fec92c59b9341
-i
-9Guobin2023/src/main/java/com/hl/travel/util/SMSUtils.java,7\5\757cc062dc4ec1f6407558c4a2b56591f3f155f4
 j
 :Guobin2023/src/main/java/com/hl/travel/util/HttpUtils.java,b\a\ba0d01cb3ea883aa1611f4546da954649c1962b5
 k
@@ -67,8 +57,6 @@ y
 IGuobin2023/src/main/java/com/hl/travel/constant/RedisMessageConstant.java,b\5\b5bb6a0eb398753dff842f454ac88bb62f8cc2cc
 E
 Guobin2023/.gitignore,4\2\42f66f88ca71805c246d279d2599dcf6866ff2f9
-{
-KGuobin2023/src/main/java/com/hl/travel/Service/impl/SetmealServiceImpl.java,5\f\5f81fb13c40222f13edd0a1e30bbd08434b2f387
 t
 DGuobin2023/src/main/java/com/hl/travel/constant/MessageConstant.java,c\a\caf401b5afd0c026622441549d65d1875f90acb7
 Q
@@ -91,11 +79,15 @@ B
 KGuobin2023/src/main/java/com/hl/travel/controller/TravelGroupCotroller.java,4\9\491bd6f6a3ea5452b23a857317a876a66192497e
 i
 9Guobin2023/src/main/java/com/hl/travel/util/POIUtils.java,b\a\ba78854be7cf4059b5d53c589731208ca8df8f3e
+w
+GGuobin2023/src/main/java/com/hl/travel/Service/OrderSettingService.java,c\d\cd6825dcb15c333ed291688936b80a1b73497fbb
+€
+PGuobin2023/src/main/java/com/hl/travel/Service/impl/OrderSettingServiceImpl.java,7\5\75a1c616760f901b7131e01be49046c56b192ca0
+o
+?Guobin2023/src/main/java/com/hl/travel/entity/OrderSetting.java,6\5\65de72f190ccc1bb9d71dc0bea0c8ced6a0f5a2b
+r
+BGuobin2023/src/main/java/com/hl/travel/Service/SetmealService.java,5\b\5b64e030914fddfce0cf3c2e3d47b263a624a652
 x
 HGuobin2023/src/main/java/com/hl/travel/controller/SetmealController.java,6\f\6f7f14a0e6528d81d70f560d95eab127f7147176
 j
 :Guobin2023/src/main/java/com/hl/travel/dao/SetmealDao.java,8\e\8e5b7aaed2f9bf39a7f0bf75048a6fd5659f4142
-r
-BGuobin2023/src/main/java/com/hl/travel/Service/SetmealService.java,5\b\5b64e030914fddfce0cf3c2e3d47b263a624a652
-j
-:Guobin2023/src/main/java/com/hl/travel/util/DateUtils.java,4\1\41547ba172bf86810ed0ff5d867e6b2867030432

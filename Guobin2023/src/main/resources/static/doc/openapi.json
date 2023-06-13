@@ -1,0 +1,397 @@
+{
+  "components": {
+    "schemas": {
+      "_travelItem_findPageresponse": {
+        "properties": {
+          "total": {
+            "format": "int64",
+            "description": "No comments found.",
+            "type": "integer"
+          },
+          "rows": {
+            "description": "No comments found.",
+            "type": "array",
+            "items": {}
+          }
+        }
+      },
+      "_travelItem_addrequest": {
+        "properties": {
+          "id": {
+            "format": "int32",
+            "description": "No comments found.",
+            "type": "integer"
+          },
+          "code": {
+            "format": "string",
+            "description": "No comments found.",
+            "type": "string"
+          },
+          "name": {
+            "format": "string",
+            "description": "No comments found.",
+            "type": "string"
+          },
+          "sex": {
+            "format": "string",
+            "description": "No comments found.",
+            "type": "string"
+          },
+          "age": {
+            "format": "string",
+            "description": "No comments found.",
+            "type": "string"
+          },
+          "price": {
+            "format": "float",
+            "description": "No comments found.",
+            "type": "number"
+          },
+          "type": {
+            "format": "string",
+            "description": "No comments found.",
+            "type": "string"
+          },
+          "remark": {
+            "format": "string",
+            "description": "No comments found.",
+            "type": "string"
+          },
+          "attention": {
+            "format": "string",
+            "description": "No comments found.",
+            "type": "string"
+          }
+        }
+      },
+      "_travelItem_editresponse": {
+        "properties": {
+          "flag": {
+            "format": "boolean",
+            "description": "No comments found.",
+            "type": "boolean"
+          },
+          "message": {
+            "format": "string",
+            "description": "No comments found.",
+            "type": "string"
+          },
+          "data": {
+            "description": "No comments found.(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_travelItem_findByIdrequest": {},
+      "_travelItem_findByIdresponse": {
+        "properties": {
+          "flag": {
+            "format": "boolean",
+            "description": "No comments found.",
+            "type": "boolean"
+          },
+          "message": {
+            "format": "string",
+            "description": "No comments found.",
+            "type": "string"
+          },
+          "data": {
+            "description": "No comments found.(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_travelItem_findPagerequest": {
+        "properties": {
+          "currentPage": {
+            "format": "int32",
+            "description": "No comments found.",
+            "type": "integer"
+          },
+          "pageSize": {
+            "format": "int32",
+            "description": "No comments found.",
+            "type": "integer"
+          },
+          "queryString": {
+            "format": "string",
+            "description": "No comments found.",
+            "type": "string"
+          }
+        }
+      },
+      "_travelItem_deleterequest": {},
+      "_travelItem_addresponse": {
+        "properties": {
+          "flag": {
+            "format": "boolean",
+            "description": "No comments found.",
+            "type": "boolean"
+          },
+          "message": {
+            "format": "string",
+            "description": "No comments found.",
+            "type": "string"
+          },
+          "data": {
+            "description": "No comments found.(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_travelItem_deleteresponse": {
+        "properties": {
+          "flag": {
+            "format": "boolean",
+            "description": "No comments found.",
+            "type": "boolean"
+          },
+          "message": {
+            "format": "string",
+            "description": "No comments found.",
+            "type": "string"
+          },
+          "data": {
+            "description": "No comments found.(object)",
+            "type": "object"
+          }
+        }
+      },
+      "_travelItem_editrequest": {
+        "properties": {
+          "id": {
+            "format": "int32",
+            "description": "No comments found.",
+            "type": "integer"
+          },
+          "code": {
+            "format": "string",
+            "description": "No comments found.",
+            "type": "string"
+          },
+          "name": {
+            "format": "string",
+            "description": "No comments found.",
+            "type": "string"
+          },
+          "sex": {
+            "format": "string",
+            "description": "No comments found.",
+            "type": "string"
+          },
+          "age": {
+            "format": "string",
+            "description": "No comments found.",
+            "type": "string"
+          },
+          "price": {
+            "format": "float",
+            "description": "No comments found.",
+            "type": "number"
+          },
+          "type": {
+            "format": "string",
+            "description": "No comments found.",
+            "type": "string"
+          },
+          "remark": {
+            "format": "string",
+            "description": "No comments found.",
+            "type": "string"
+          },
+          "attention": {
+            "format": "string",
+            "description": "No comments found.",
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:82"
+    }
+  ],
+  "openapi": "3.0.3",
+  "paths": {
+    "/travelItem/findById": {
+      "get": {
+        "summary": "根据id查询自由行 数据回显",
+        "deprecated": false,
+        "description": "根据id查询自由行 数据回显",
+        "tags": [
+          ""
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_travelItem_findByIdresponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"flag\": true,\n  \"message\": \"success\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "520a8c427a532542a8d28488438e6a1c",
+        "parameters": [
+          {
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "in": "query",
+            "description": "自由行id",
+            "required": false,
+            "example": "920",
+            "name": "id"
+          }
+        ]
+      }
+    },
+    "/travelItem/delete": {
+      "get": {
+        "summary": "删除自由行",
+        "deprecated": false,
+        "description": "删除自由行",
+        "tags": [
+          ""
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_travelItem_deleteresponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"flag\": true,\n  \"message\": \"success\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "f79cec6dc7e10b80b314cc9c998af2df",
+        "parameters": [
+          {
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            },
+            "in": "query",
+            "description": "自由行id",
+            "required": false,
+            "example": "353",
+            "name": "id"
+          }
+        ]
+      }
+    },
+    "/travelItem/edit": {
+      "get": {
+        "summary": "编辑自由行",
+        "deprecated": false,
+        "description": "编辑自由行",
+        "tags": [
+          ""
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_travelItem_editresponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"flag\": true,\n  \"message\": \"success\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "8bda9a9afbd3d54144dcd7ecc0a49416",
+        "parameters": []
+      }
+    },
+    "/travelItem/findPage": {
+      "get": {
+        "summary": "分页查询",
+        "deprecated": false,
+        "description": "分页查询",
+        "tags": [
+          ""
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_travelItem_findPageresponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"total\": 388,\n  \"rows\": [\n    {\n      \"object\": \"any object\"\n    }\n  ]\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "58edcd7238cf643d39848faae6862184",
+        "parameters": []
+      }
+    },
+    "/travelItem/add": {
+      "get": {
+        "summary": "新增自由行",
+        "deprecated": false,
+        "description": "新增自由行",
+        "tags": [
+          ""
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/_travelItem_addresponse"
+                },
+                "examples": {
+                  "json": {
+                    "summary": "test data",
+                    "value": "{\n  \"flag\": true,\n  \"message\": \"success\",\n  \"data\": {\n    \"waring\": \"You may have used non-display generics.\"\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "137898c73d35f8f116922a9388284abc",
+        "parameters": []
+      }
+    }
+  },
+  "info": {
+    "title": "guobin-travel-api",
+    "version": "1.0.0"
+  }
+}
