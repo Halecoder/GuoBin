@@ -12,4 +12,10 @@ public interface OrderMobileDao {
     void add(Order order);
 
     Map findByIdForDetail(Integer id);
+
+    int getTodayOrderNumber(String date);
+    int getTodayVisitsNumber(String date);
+    int getThisWeekAndMonthOrderNumber(Map<String, Object> map);
+    int getThisWeekAndMonthVisitsNumber(Map<String, Object> map);
+    List<Map<String,Object>> findHotSetmeal();
 }

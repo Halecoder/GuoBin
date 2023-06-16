@@ -317,6 +317,25 @@ public class DateUtils {
         return sdf.format(cal.getTime());
     }
 
+
+    //获取当前月份
+    public static List<String> getPast12MonthByNow(){
+        // 获取日历对象
+        Calendar calendar = Calendar.getInstance();
+        //根据当前时间，获取前12个月的日历(当前日历2020-02，12个月前，日历时间2019-03)
+        //第一个参数，日历字段
+        //第二个参数，要添加到字段中的日期或时间
+        calendar.add(Calendar.MONTH,-12);
+        List<String> list = new ArrayList<String>();
+        for(int i=0;i<12;i++){
+            //第一个参数是月份 2018-7
+            //第二个参数是月份+1个月
+            calendar.add(Calendar.MONTH,1);
+            list.add(new SimpleDateFormat("yyyy-MM").format(calendar.getTime()));
+        }
+        return list;
+    }
+
     public static void main(String[] args) {
         try {
             System.out.println("本周一" + parseDate2String(getThisWeekMonday()));

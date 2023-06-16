@@ -13,4 +13,24 @@
     <select id="findByTelephone" resultType="com.hl.travel.entity.Member">
         select * from t_member where phoneNumber=#{telephone}
     </select>
+    <select id="findMemberCountBeforeDate" resultType="java.lang.Integer">
+        select count(id) from t_member where regTime &lt;= #{regTime}
+    </select>
+
+
+
+    <!--今日新增会员数-->
+    <select id="getTodayNewMember" parameterType="string" resultType="int">
+        SELECT COUNT(id) FROM t_member WHERE regTime = #{date}
+    </select>
+
+    <!--总会员数-->
+    <select id="getTotalMember" resultType="int">
+        SELECT COUNT(id) FROM t_member
+    </select>
+
+    <!--本周/本月新增会员数-->
+    <select id="getThisWeekAndMonthNewMember" parameterType="string" resultType="int">
+        SELECT COUNT(id) FROM t_member WHERE regTime &gt;= #{date}
+    </select>
 </mapper>

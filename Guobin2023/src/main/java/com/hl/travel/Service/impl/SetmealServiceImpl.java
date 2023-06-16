@@ -121,6 +121,12 @@ public class SetmealServiceImpl implements SetmealService {
        return setmealDao.findDescById(id);
     }
 
+    @Override
+    public List<Map<String, Object>> findSetmealCount() {
+
+        return setmealDao.findSetmealCount();
+    }
+
     private void addSetmealAndTravelGroup(Integer id, Integer[] travelgroupIds) {
         if (travelgroupIds != null && travelgroupIds.length > 0) {
             for (Integer travelgroupId : travelgroupIds) {

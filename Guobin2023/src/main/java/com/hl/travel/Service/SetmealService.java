@@ -4,6 +4,7 @@ import com.hl.travel.entity.Setmeal;
 import com.hl.travel.vo.PageResult;
 
 import java.util.List;
+import java.util.Map;
 
 public interface SetmealService {
 
@@ -23,4 +24,6 @@ public interface SetmealService {
     List<Setmeal> findAll();
 
     Setmeal findDescById(Integer id);
+
+    List<Map<String, Object>> findSetmealCount();
 }
