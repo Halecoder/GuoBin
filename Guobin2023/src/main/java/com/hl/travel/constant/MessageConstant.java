@@ -75,4 +75,5 @@ public class MessageConstant {
     public static final String DELETE_SETMEAL_FAIL = "删除套餐失败";
     public static final String DELETE_SETMEAL_SUCCESS = "删除套餐成功";
     public static final String PIC_RAPID_UPLOAD = "图片重复上传！";
+    public static final String REGIS_SUCCESS = "注册成功";
 }
