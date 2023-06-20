@@ -76,4 +76,5 @@ public class MessageConstant {
     public static final String DELETE_SETMEAL_SUCCESS = "删除套餐成功";
     public static final String PIC_RAPID_UPLOAD = "图片重复上传！";
     public static final String REGIS_SUCCESS = "注册成功";
+    public static final String LOGIN_SUCCESS_URL = "http://127.0.0.1:5501";
 }

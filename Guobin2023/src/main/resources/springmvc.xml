@@ -48,4 +48,11 @@
         <property name="defaultEncoding" value="UTF-8"/>
     </bean>
 
+<!--    &lt;!&ndash;    导入security&ndash;&gt;-->
+<!--    <import resource="classpath:spring-security.xml"></import>-->
+
+
+
+
+
 </beans>

@@ -5,6 +5,7 @@
     <settings>
         <!-- 开启驼峰命名 -->
         <setting name="mapUnderscoreToCamelCase" value="true" />
+        <setting name="logImpl" value="LOG4J"/>
     </settings>
     <plugins>
         <!-- com.github.pagehelper 为 PageHelper 类所在包名 -->
@@ -13,4 +14,5 @@
             <property name="dialect" value="mysql"/>
         </plugin>
     </plugins>
+
 </configuration>

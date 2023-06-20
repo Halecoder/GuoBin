@@ -7,6 +7,7 @@ import com.hl.travel.vo.PageResult;
 import com.hl.travel.vo.QueryPageBean;
 import com.hl.travel.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,6 +44,7 @@ public class TravelItemController {
      * @return 分页结果
      */
     @RequestMapping("/findPage")
+    @PreAuthorize("hasAuthority('TRAVELITEM_QUERY')")//权限校验
     public PageResult findPage(@RequestBody QueryPageBean queryPageBean) {
         PageResult pageResult = travelItemService.findPage(
                 queryPageBean.getCurrentPage(),
@@ -59,6 +61,7 @@ public class TravelItemController {
      * @return
      */
     @RequestMapping("/delete")
+    @PreAuthorize("hasAuthority('TRAVELITEM_DELETE')")//权限校验，使用TRAVELITEM_DELETE123测试
     public Result delete(Integer id) {
         try {
             travelItemService.deleteById(id);
@@ -79,6 +82,7 @@ public class TravelItemController {
      * @return
      */
     @RequestMapping("/edit")
+    @PreAuthorize("hasAuthority('TRAVELITEM_EDIT')")//权限校验
     public Result edit(@RequestBody TravelItem travelItem){
         travelItemService.edit(travelItem);
         return new Result(true,MessageConstant.EDIT_TRAVELITEM_SUCCESS);
