@@ -6,27 +6,34 @@ import com.hl.travel.model.vo.PageResult;
 import com.hl.travel.model.vo.QueryPageBean;
 import com.hl.travel.model.vo.Result;
 import com.hl.travel.service.AddressService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 百度地图地址信息
+ * @Author: HL
+ */
 @RestController
 @RequestMapping("/address")
 @CrossOrigin
+@Tag(name = "百度地图相关接口")
 public class AddressController {
 
     @Autowired
     private  AddressService addressService;
 
-    @RequestMapping("/findAllMaps")
+    /**
+     * 查询所有的地址信息
+     * @return 返回所有的地址信息
+     */
+    @GetMapping("/findAllMaps")
     public Map findAll(){
         Map map=new HashMap();
 
@@ -56,7 +63,13 @@ public class AddressController {
         return map;
     }
 
-    @RequestMapping("/findPage")
+    /**
+     * 地址分页查询
+     * @param queryPageBean 地址分页查询
+     * @return 返回分页结果
+     *
+     */
+    @PostMapping("/findPage")
     public PageResult findPage(@RequestBody QueryPageBean queryPageBean){
         PageResult pageResult=null;
         try{
@@ -67,14 +80,24 @@ public class AddressController {
         return pageResult;
     }
 
-    @RequestMapping("/addAddress")
+    /**
+     * 添加地址
+     * @param address 保存地址信息
+     * @return
+     */
+    @PostMapping("/addAddress")
     public Result addAddress(@RequestBody Address address){
         //System.out.println(address.toString());
         addressService.addAddress(address);
         return new Result(true,"地址保存成功");
     }
 
-    @RequestMapping("/deleteById")
+    /**
+     * 删除地址
+     * @param id 根据id删除地址
+     * @return
+     */
+    @PostMapping("/deleteById")
     public Result deleteById(Integer id){
         addressService.deleteById(id);
         return new Result(true,"已删除地址");

@@ -7,24 +7,31 @@ import com.hl.travel.constant.RedisMessageConstant;
 import com.hl.travel.model.vo.Result;
 import com.hl.travel.utils.SMSUtils;
 import com.hl.travel.utils.ValidateCodeUtils;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import redis.clients.jedis.JedisPool;
 
+/**
+ * 验证码管理
+ */
 @RestController
-
 @RequestMapping("/validateCode")
 @CrossOrigin
+@Tag(name = "验证码相关接口")
 public class ValidateCodeController {
 
     @Autowired
     private JedisPool jedisPool;
 
+    /**
+     * 预约时发送手机验证码
+     * @param telephone 手机号
+     * @return
+     */
     //预约时发送手机验证码
-    @RequestMapping("/sendForOrder")
+    @PostMapping("/sendForOrder")
     public Result send4Order(String telephone)  {
 
         //生成验证码
@@ -48,8 +55,12 @@ public class ValidateCodeController {
     }
 
 
-
-    @RequestMapping("/sendForLogin")
+    /**
+     * 登录时发送手机验证码
+     * @param telephone 手机号
+     * @return
+     */
+    @PostMapping("/sendForLogin")
     public Result send4Login(String telephone)  {
 
         //生成验证码

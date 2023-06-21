@@ -9,12 +9,10 @@ import com.hl.travel.model.vo.Result;
 import com.hl.travel.service.OrderMobileService;
 import com.hl.travel.service.OrderSettingService;
 import com.hl.travel.utils.POIUtils;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -24,9 +22,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 后台预约设置
+ */
 @RestController
 @CrossOrigin
 @RequestMapping("/orderSetting")
+@Tag(name = "后台预约设置相关接口")
 public class OrderSettingController {
 
     @Autowired
@@ -35,7 +37,12 @@ public class OrderSettingController {
     @Autowired
     private OrderMobileService orderMobileService;
 
-    @RequestMapping("/upload")
+    /**
+     * 批量导入预约设置
+     * @param excelFile 上传的文件
+     * @return
+     */
+    @GetMapping("/upload")
     public Result upload(MultipartFile excelFile) {
 
         //1.使用POI解析文件 得到List<String[]> list
@@ -69,7 +76,13 @@ public class OrderSettingController {
 
     }
 
-    @RequestMapping("/getOrderSettingByMonth")
+    /**
+     * 根据月份查询预约数据
+     * @param date 格式为：2022-12
+     * @return
+     * @throws ParseException
+     */
+    @GetMapping("/getOrderSettingByMonth")
     public Result getOrderSettingByMonth(String date) throws ParseException {//参数格式为：2022-12
 
         List<Map> maps = orderSettingService.getOrderSettingByMonth(date);
@@ -83,7 +96,7 @@ public class OrderSettingController {
      * @param orderSetting
      * @return
      */
-    @RequestMapping("/editNumberByDate")
+    @PostMapping("/editNumberByDate")
     public Result editNumberByDate(@RequestBody OrderSetting orderSetting){
 
             orderSettingService.editNumberByDate(orderSetting);

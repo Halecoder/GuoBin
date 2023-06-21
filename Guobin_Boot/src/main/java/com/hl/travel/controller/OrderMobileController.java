@@ -8,20 +8,22 @@ import com.hl.travel.model.pojo.Order;
 import com.hl.travel.model.vo.Result;
 import com.hl.travel.service.OrderMobileService;
 import com.hl.travel.utils.SMSUtils;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import redis.clients.jedis.JedisPool;
 
 import java.util.Map;
 
 
+/**
+ * 移动端预约
+ */
 @RestController
 @CrossOrigin
 @RequestMapping("/order")
+@Tag(name = "移动端预约相关接口")
 public class OrderMobileController {
 
     @Autowired
@@ -37,7 +39,7 @@ public class OrderMobileController {
       * @param map
       * @return
       */
-    @RequestMapping("/submit")
+    @PostMapping("/submit")
     public Result submitOrder(@RequestBody Map map) {
         //获取用户输入的验证码
         String validateCode = (String) map.get("validateCode");
@@ -79,7 +81,13 @@ public class OrderMobileController {
 
     }
 
-    @RequestMapping("/findById")
+    /**
+     * 根据id查询预约信息，包括旅游人信息、旅游套餐信息
+     * @param id 订单id
+     * @return
+     * @throws Exception
+     */
+    @PostMapping("/findById")
     public Result findById(Integer id) throws Exception {
         Map map = null;
 

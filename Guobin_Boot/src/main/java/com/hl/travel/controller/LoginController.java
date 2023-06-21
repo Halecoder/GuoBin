@@ -7,12 +7,10 @@ import com.hl.travel.constant.RedisMessageConstant;
 
 import com.hl.travel.model.vo.Result;
 import com.hl.travel.service.LoginService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import redis.clients.jedis.JedisPool;
 
 import javax.servlet.http.Cookie;
@@ -20,9 +18,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 
+/**
+ *  前台登录
+ */
 @RestController
 @CrossOrigin
 @RequestMapping("/login")
+@Tag(name = "前台登录相关接口")
 public class LoginController {
 
 
@@ -32,7 +34,13 @@ public class LoginController {
     @Autowired
     private JedisPool jedisPool;
 
-    @RequestMapping("/check")
+    /**
+     * 用户登录
+     * @param response 用于写入Cookie，跟踪用户
+     * @param map     用户输入的验证码和手机号
+     * @return
+     */
+    @PostMapping("/check")
     public Result login(HttpServletResponse response, @RequestBody Map map)  {
 
         //获取用户输入的验证码

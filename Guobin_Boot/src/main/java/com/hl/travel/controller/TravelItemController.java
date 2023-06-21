@@ -7,15 +7,17 @@ import com.hl.travel.model.vo.PageResult;
 import com.hl.travel.model.vo.QueryPageBean;
 import com.hl.travel.model.vo.Result;
 import com.hl.travel.service.TravelItemService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+/**
+ * 自由行管理
+ */
 @CrossOrigin //跨域
 @RestController
 @RequestMapping(value = "/travelItem")
+@Tag(name = "自由行相关接口")
 public class TravelItemController {
 
     @Autowired
@@ -23,11 +25,10 @@ public class TravelItemController {
 
     /**
      * 新增自由行
-     *
      * @param travelItem 旅游项目
      * @return
      */
-    @RequestMapping("/add")
+    @PostMapping("/add")
     public Result add(@RequestBody TravelItem travelItem) {
         try {
             travelItemService.add(travelItem);
@@ -39,11 +40,10 @@ public class TravelItemController {
 
     /**
      * 分页查询
-     *
      * @param queryPageBean 查询条件
      * @return 分页结果
      */
-    @RequestMapping("/findPage")
+    @PostMapping("/findPage")
     public PageResult findPage(@RequestBody QueryPageBean queryPageBean) {
         PageResult pageResult = travelItemService.findPage(
                 queryPageBean.getCurrentPage(),
@@ -55,11 +55,10 @@ public class TravelItemController {
 
     /**
      * 删除自由行
-     *
      * @param id 自由行id
      * @return
      */
-    @RequestMapping("/delete")
+    @GetMapping("/delete")
     public Result delete(Integer id) {
         try {
             travelItemService.deleteById(id);
@@ -79,7 +78,7 @@ public class TravelItemController {
      * @param travelItem 旅游项目
      * @return
      */
-    @RequestMapping("/edit")
+    @PostMapping("/edit")
     public Result edit(@RequestBody TravelItem travelItem){
         travelItemService.edit(travelItem);
         return new Result(true,MessageConstant.EDIT_TRAVELITEM_SUCCESS);
@@ -90,13 +89,17 @@ public class TravelItemController {
      * @param id 自由行id
      * @return
      */
-    @RequestMapping("/findById")
+    @GetMapping("/findById")
     public Result findById(Integer id){
         TravelItem travelItem =  travelItemService.findById(id);
         return new Result(true,MessageConstant.QUERY_TRAVELITEM_SUCCESS,travelItem);
     }
 
-    @RequestMapping("/findAllItem")
+    /**
+     * 查询所有自由行
+     * @return 查询所有自由行
+     */
+    @GetMapping("/findAllItem")
     public Result findAllItem(){
         return new Result(true,MessageConstant.QUERY_TRAVELITEM_SUCCESS,travelItemService.findAllItem());
     }

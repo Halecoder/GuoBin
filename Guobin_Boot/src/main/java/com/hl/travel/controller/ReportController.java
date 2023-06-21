@@ -9,14 +9,13 @@ import com.hl.travel.service.MemberService;
 import com.hl.travel.service.ReportService;
 import com.hl.travel.service.SetmealService;
 import com.hl.travel.utils.DateUtils;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -30,10 +29,13 @@ import java.util.List;
 import java.util.Map;
 
 
-
+/**
+ * 报表控制器
+ */
 @CrossOrigin
 @RequestMapping("/report")
 @RestController
+@Tag(name = "报表相关接口")
 public class ReportController {
 
 
@@ -52,10 +54,9 @@ public class ReportController {
 
     /**
      * 会员数量统计
-     *
      * @return
      */
-    @RequestMapping("/getMemberReport")
+    @GetMapping("/getMemberReport")
     public Result getMemberReport() {
 
         //根据当前时间，获取前12个月的日历
@@ -72,8 +73,12 @@ public class ReportController {
     }
 
 
+    /**
+     * 套餐预约占比
+     * @return 返回套餐预约占比
+     */
     // 统计套餐预约人数占比（饼图）
-    @RequestMapping("/getSetmealReport")
+    @GetMapping("/getSetmealReport")
     public Result getSetmealReport() {
         // 组织套餐名称+套餐名称对应的数据
         List<Map<String, Object>> list = setmealService.findSetmealCount();
@@ -91,8 +96,12 @@ public class ReportController {
         return new Result(true, MessageConstant.QUERY_SETMEALLIST_SUCCESS, map);
     }
 
+    /**
+     * 运营数据统计（页面）
+     * @return
+     */
     // 运营数据统计（页面）
-    @RequestMapping(value = "/getBusinessReportData")
+    @GetMapping(value = "/getBusinessReportData")
     public Result getBusinessReportData() {
         try {
             Map<String, Object> map = reportService.getBusinessReportData();
@@ -103,7 +112,13 @@ public class ReportController {
         }
     }
 
-    @RequestMapping("/exportBusinessReport")
+    /**
+     * 导出运营数据到Excel
+     * @param request 请求对象
+     * @param response 响应对象
+     * @return
+     */
+    @GetMapping("/exportBusinessReport")
     public Result exportBusinessReport(HttpServletRequest request, HttpServletResponse response) {
         try {
             //远程调用报表服务获取报表数据

@@ -18,6 +18,11 @@ public class TravelInterceptor extends HandlerInterceptorAdapter {
             return true;
         }
 
+        // 放行swaager和api文档
+        if (requestPath.contains("swagger-ui") || requestPath.contains("api-docs")) {
+            return true;
+        }
+
         // 如果请求方法为 OPTIONS，则放行请求
         if(request.getMethod().equals(RequestMethod.OPTIONS.name())) {
             response.setStatus(HttpStatus.OK.value());

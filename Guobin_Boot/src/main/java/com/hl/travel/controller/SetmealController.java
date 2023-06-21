@@ -14,12 +14,10 @@ import com.hl.travel.model.vo.Result;
 import com.hl.travel.service.SetmealService;
 import com.hl.travel.utils.B2Utils;
 import com.hl.travel.utils.FileUtils;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import redis.clients.jedis.JedisPool;
 
@@ -29,10 +27,13 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * 套餐管理
+ */
 @CrossOrigin
 @RestController
 @RequestMapping("/setmeal")
-
+@Tag(name = "套餐管理相关接口")
 public class SetmealController {
 
     @Autowired
@@ -42,7 +43,13 @@ public class SetmealController {
     private JedisPool jedisPool;
 
 
-    @RequestMapping("/upload")
+    /**
+     * 上传图片
+     * @param imgFile 图片文件
+     * @param id     套餐id
+     * @return
+     */
+    @GetMapping("/upload")
     public Result upload(MultipartFile imgFile, Integer id) {
 
         //获取原始文件名
@@ -99,7 +106,12 @@ public class SetmealController {
     }
 
 
-    @RequestMapping("/findPage")
+    /**
+     * 分页查询套餐
+     * @param queryPageBean 分页查询条件
+     * @return
+     */
+    @PostMapping("/findPage")
     public PageResult findPage(@RequestBody QueryPageBean queryPageBean) {
         PageResult pageResult = setmealService.findPage(
                 queryPageBean.getCurrentPage(),
@@ -109,7 +121,13 @@ public class SetmealController {
 
     }
 
-    @RequestMapping("/add")
+    /**
+     * 新增套餐
+     * @param setmeal      套餐信息
+     * @param travelgroupIds 跟团游id
+     * @return
+     */
+    @PostMapping("/add")
     public Result add(@RequestBody Setmeal setmeal, Integer[] travelgroupIds) {
         try {
             setmealService.add(setmeal, travelgroupIds);
@@ -121,11 +139,10 @@ public class SetmealController {
 
     /**
      * 根据id查询套餐信息
-     *
      * @param id 套餐id
      * @return
      */
-    @RequestMapping("/findById")
+    @GetMapping("/findById")
     public Result findById(Integer id) {
         Setmeal setmeal = setmealService.findById(id);
         return new Result(true, MessageConstant.QUERY_SETMEAL_SUCCESS, setmeal);
@@ -134,17 +151,22 @@ public class SetmealController {
 
     /**
      * 根据套餐id查询跟团游的id
-     *
      * @param id 套餐id
      * @return
      */
-    @RequestMapping("/findTravelGroupIdsBySetmealId")
+    @GetMapping("/findTravelGroupIdsBySetmealId")
     public List<Integer> findTravelGroupIdsBySetmealId(Integer id) {
         List<Integer> travelGroupIds = setmealService.findTravelGroupIdsBySetmealId(id);
         return travelGroupIds;
     }
 
-    @RequestMapping("/edit")
+    /**
+     * 编辑套餐
+     * @param setmeal 套餐信息
+     * @param travelgroupIds 跟团游id
+     * @return
+     */
+    @PostMapping("/edit")
     public Result edit(@RequestBody Setmeal setmeal, Integer[] travelgroupIds) {
         try {
             setmealService.edit(setmeal, travelgroupIds);
@@ -154,7 +176,12 @@ public class SetmealController {
         return new Result(true, MessageConstant.EDIT_SETMEAL_SUCCESS);
     }
 
-    @RequestMapping("/delete")
+    /**
+     * 根据id删除套餐
+     * @param id 套餐id
+     * @return
+     */
+    @GetMapping("/delete")
     public Result delete(Integer id) {
         try {
             setmealService.deleteById(id);
@@ -166,9 +193,10 @@ public class SetmealController {
 
 
     /**
+     * 移动端获取所有套餐
      * @return 移动端获取数据
      */
-    @RequestMapping("/getSetmeal")
+    @GetMapping("/getSetmeal")
     public Result getSetmeal (){
 
         List<Setmeal> setmeals = setmealService.findAll();
@@ -178,7 +206,12 @@ public class SetmealController {
     }
 
 
-    @RequestMapping("/findDescById")
+    /**
+     * 移动端根据id查询套餐详情
+     * @param id 套餐id
+     * @return
+     */
+    @GetMapping("/findDescById")
     public Result findDescById(Integer id){
         //进行预约
        Setmeal setmeal =  setmealService.findDescById(id);

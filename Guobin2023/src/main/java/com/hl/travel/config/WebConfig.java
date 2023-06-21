@@ -1,5 +1,6 @@
 package com.hl.travel.config;
 
+import com.hl.travel.constant.MessageConstant;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -26,7 +27,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("*")
+                .allowedOrigins(MessageConstant.LOGIN_SUCCESS_URL)
                 .allowedMethods("*")
                 .allowCredentials(true);
     }

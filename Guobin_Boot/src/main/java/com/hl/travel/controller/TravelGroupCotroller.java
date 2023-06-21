@@ -7,27 +7,32 @@ import com.hl.travel.model.vo.PageResult;
 import com.hl.travel.model.vo.QueryPageBean;
 import com.hl.travel.model.vo.Result;
 import com.hl.travel.service.TravelGroupService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * 跟团游管理
+ */
 @RequestMapping("/travelGroup")
 @RestController
 @CrossOrigin
+@Tag(name = "跟团游相关接口")
 public class TravelGroupCotroller {
 
     @Autowired
     private   TravelGroupService travelGroupService;
 
 
-
-
-    @RequestMapping("/findPage")
+    /**
+     * 分页查询跟团游
+     * @param queryPageBean 分页查询条件
+     * @return
+     */
+    @PostMapping("/findPage")
     public PageResult findPage(@RequestBody QueryPageBean queryPageBean) {
         PageResult pageResult = travelGroupService.findPage(
                 queryPageBean.getCurrentPage(),
@@ -39,11 +44,10 @@ public class TravelGroupCotroller {
 
     /**
      * 新增跟团游
-     *
      * @param travelGroup 旅游项目
      * @return
      */
-    @RequestMapping("/add")
+    @PostMapping("/add")
     public Result add(@RequestBody TravelGroup travelGroup, Integer[] travelItemIds) {
         System.out.println(travelGroup);
         try {
@@ -55,26 +59,47 @@ public class TravelGroupCotroller {
     }
 
 
-    @RequestMapping("/findById")
+    /**
+     * 根据跟团游id查询跟团游
+     * @param id 跟团游id
+     * @return
+     */
+    @GetMapping("/findById")
     public Result findById(Integer id){
         TravelGroup travelGroup =  travelGroupService.findById(id);
         return new Result(true,MessageConstant.QUERY_TRAVELITEM_SUCCESS,travelGroup);
     }
 
-    @RequestMapping("/findTravelItemIdByTravelGroupId")
+    /**
+     * 根据跟团游id查询旅游项目id
+     * @param id 跟团游id
+     * @return
+     */
+    @GetMapping("/findTravelItemIdByTravelGroupId")
     public List<Integer> findTravelItemIdByTravelGroupId(Integer id){
         List<Integer> travelItemIds = travelGroupService.findTravelItemIdByTravelGroupId(id);
         return travelItemIds;
     }
 
-    @RequestMapping("/edit")
+    /**
+     * 编辑跟团游
+     * @param travelItemIds 旅游项目id
+     * @param travelGroup  跟团游
+     * @return
+     */
+    @PostMapping("/edit")
     public Result edit(Integer[] travelItemIds,@RequestBody TravelGroup travelGroup ){
         travelGroupService.edit(travelItemIds,travelGroup);
         return new Result(true,MessageConstant.EDIT_TRAVELGROUP_SUCCESS);
     }
 
 
-    @RequestMapping("/delete")
+    /**
+     * 删除跟团游
+     * @param id 跟团游id
+     * @return
+     */
+    @GetMapping("/delete")
     public Result delete(Integer id) {
         try {
             travelGroupService.deleteById(id);
@@ -89,9 +114,10 @@ public class TravelGroupCotroller {
     }
 
     /**
+     * 查询所有跟团游
      * @return 查询所有跟团游
      */
-    @RequestMapping("/findAll")
+    @GetMapping("/findAll")
     public Result findAll(){
         List<TravelGroup> travelGroups = travelGroupService.findAll();
         return new Result(true,MessageConstant.QUERY_TRAVELGROUP_SUCCESS,travelGroups);
