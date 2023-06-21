@@ -67,8 +67,12 @@
     // jQuery发送ajax请求
     $.ajax({
       type: "GET",
-      url: "/address/findAllMaps.do",
+      url: "http://localhost:82/address/findAllMaps.do",
       // data:JSON.stringify(userList),
+      //携带cookie
+      xhrFields: {
+        withCredentials: true,
+      },
       async: false, // 同步
       contentType: "application/json;charset=utf-8",
       success: function (data) {

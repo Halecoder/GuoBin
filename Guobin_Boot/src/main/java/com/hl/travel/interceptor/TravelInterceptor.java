@@ -1,5 +1,6 @@
 package com.hl.travel.interceptor;
 
+import com.hl.travel.constant.MessageConstant;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,6 +23,9 @@ public class TravelInterceptor extends HandlerInterceptorAdapter {
             response.setStatus(HttpStatus.OK.value());
             return true;
         }
+        //拦截重定向到无权限页面
+
+        response.sendRedirect(MessageConstant.LOGIN_SUCCESS_URL+"/pages/error/404.html");
 
         return false;
     }

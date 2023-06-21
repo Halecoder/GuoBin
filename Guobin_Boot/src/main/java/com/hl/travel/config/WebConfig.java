@@ -17,13 +17,19 @@ public class WebConfig implements WebMvcConfigurer {
 
     }
 
-    @Override
-    public  void  addCorsMappings(CorsRegistry registry){
-        registry.addMapping("/**")
-                .allowedOrigins(MessageConstant.LOGIN_SUCCESS_URL,MessageConstant.LOGIN_FRONT_URL)
-                .allowedHeaders("*")
-                .allowedMethods("*")
-                .allowCredentials(true)
-                .maxAge(30*1000);
-    }
+    /**
+     * @param registry 跨域请求处理
+     * 引入SpringSecurity后，这种方法会失效
+     */
+//    @Override
+//    public  void  addCorsMappings(CorsRegistry registry){
+//        registry.addMapping("/**")
+//                .allowedOrigins(MessageConstant.LOGIN_SUCCESS_URL,MessageConstant.LOGIN_FRONT_URL)
+//                .allowedHeaders("*")
+//                .allowedMethods("*")
+//                .allowCredentials(true)
+//                .maxAge(30*1000);
+//    }
+
+
 }

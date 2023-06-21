@@ -38,13 +38,6 @@ public class RedisSessionConfig {
         return ConfigureRedisAction.NO_OP;
     }
 
-//    @Bean
-//    public RedisConnectionFactory redisConnectionFactory() {
-//        JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
-//        jedisConnectionFactory.setHostName(host);
-//        jedisConnectionFactory.setPort(port);
-//        return jedisConnectionFactory;
-//    }
 
 }
 

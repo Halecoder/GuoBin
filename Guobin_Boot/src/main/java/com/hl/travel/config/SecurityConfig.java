@@ -152,13 +152,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             @Override
             public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
                 // 自定义登录成功后的处理逻辑
-//                // 创建一个新的会话
-//                Session session = sessionRepository.createSession();
-//                // 将会话标识符设置为响应的Cookie
-//                Cookie sessionCookie = new Cookie("JSESSIONID", session.getId());
-//                sessionCookie.setMaxAge(-1);
-//                sessionCookie.setPath("/");
-//                response.addCookie(sessionCookie);
                 //保存一份到前端域名
                 response.setHeader("Access-Control-Allow-Credentials", "true"); // 允许携带cookie跨域
                 // 例如，重定向到前端页面的URL
@@ -173,7 +166,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowCredentials(true); // 允许携带cookie跨域
-        configuration.setAllowedOrigins(Collections.singletonList(MessageConstant.LOGIN_SUCCESS_URL)); // 允许所有域名进行跨域调用
+        configuration.setAllowedOrigins(Arrays.asList(MessageConstant.LOGIN_SUCCESS_URL,MessageConstant.LOGIN_FRONT_URL)); // 允许所有域名进行跨域调用
         configuration.setAllowedMethods(Collections.singletonList("*")); // 允许所有请求方法跨域调用
         configuration.setAllowedHeaders(Collections.singletonList("*")); // 允许所有请求头跨域调用
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

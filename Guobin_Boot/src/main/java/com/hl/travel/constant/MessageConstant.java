@@ -78,6 +78,6 @@ public class MessageConstant {
     public static final String REGIS_SUCCESS = "注册成功";
     public static final String LOGIN_SUCCESS_URL = "http://localhost:5501";
 
-    public static final String LOGIN_FRONT_URL = "http://localhost:5501";
+    public static final String LOGIN_FRONT_URL = "http://localhost:5500";
 
 }
