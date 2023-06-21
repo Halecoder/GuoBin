@@ -1,5 +1,6 @@
 package com.hl.travel.config;
 
+import com.hl.travel.constant.MessageConstant;
 import com.hl.travel.interceptor.TravelInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -16,12 +17,10 @@ public class WebConfig implements WebMvcConfigurer {
 
     }
 
-
-
     @Override
     public  void  addCorsMappings(CorsRegistry registry){
         registry.addMapping("/**")
-                .allowedOrigins("http://127.0.0.1:5501")
+                .allowedOrigins(MessageConstant.LOGIN_SUCCESS_URL,MessageConstant.LOGIN_FRONT_URL)
                 .allowedHeaders("*")
                 .allowedMethods("*")
                 .allowCredentials(true)

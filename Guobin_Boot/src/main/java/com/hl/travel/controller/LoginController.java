@@ -7,7 +7,6 @@ import com.hl.travel.constant.RedisMessageConstant;
 
 import com.hl.travel.model.vo.Result;
 import com.hl.travel.service.LoginService;
-import com.hl.travel.utils.RedisUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -27,9 +26,11 @@ import java.util.Map;
 public class LoginController {
 
 
-
     @Autowired
     private LoginService loginService;
+
+    @Autowired
+    private JedisPool jedisPool;
 
     @RequestMapping("/check")
     public Result login(HttpServletResponse response, @RequestBody Map map)  {
@@ -39,7 +40,7 @@ public class LoginController {
         //获取用户输入的手机号
         String telephone = (String) map.get("telephone");
         //从redis中获取缓存的验证码
-        String codeInRedis = RedisUtils.getJedisPool().getResource().get(telephone + RedisMessageConstant.SENDTYPE_LOGIN);
+        String codeInRedis = jedisPool.getResource().get(telephone + RedisMessageConstant.SENDTYPE_LOGIN);
 
         //比对验证码
         if (codeInRedis == null || !codeInRedis.equals(validateCode)) {

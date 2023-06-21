@@ -23,6 +23,7 @@
     <script src="../js/vue.js"></script>
     <script src="../plugins/elementui/index.js"></script>
     <script src="../js/axios-0.18.0.js"></script>
+    <script type="text/javascript" src="../js/axios-config.js"></script>
     <script
       type="text/javascript"
       src="http://api.map.baidu.com/api?v=3.0&ak=bGngZRcQBYnRK45VzabtI5fkYoKT5aNK"
@@ -294,12 +295,10 @@
             pageSize: this.pagination.pageSize,
             queryString: this.pagination.queryString,
           };
-          axios
-            .post("http://localhost:82/address/findPage.do", param)
-            .then((res) => {
-              this.dataList = res.data.rows;
-              this.pagination.total = res.data.total;
-            });
+          axios.post("/address/findPage.do", param).then((res) => {
+            this.dataList = res.data.rows;
+            this.pagination.total = res.data.total;
+          });
         },
         // 重置表单
         resetForm() {
@@ -324,15 +323,13 @@
             type: "warning",
           })
             .then(() => {
-              axios
-                .post("http://localhost:82/address/deleteById.do?id=" + row.id)
-                .then((res) => {
-                  this.$message({
-                    type: "success",
-                    message: res.data.message,
-                  });
-                  this.findPage();
+              axios.post("/address/deleteById.do?id=" + row.id).then((res) => {
+                this.$message({
+                  type: "success",
+                  message: res.data.message,
                 });
+                this.findPage();
+              });
             })
             .catch(() => {
               this.$message({
@@ -352,16 +349,14 @@
             lng: this.userlocation.lng,
             lat: this.userlocation.lat,
           };
-          axios
-            .post("http://localhost:82/address/addAddress.do", param)
-            .then((res) => {
-              this.$message({
-                type: "success",
-                message: res.data.message,
-              });
-              this.dialogFormVisible = false;
-              this.findPage();
+          axios.post("/address/addAddress.do", param).then((res) => {
+            this.$message({
+              type: "success",
+              message: res.data.message,
             });
+            this.dialogFormVisible = false;
+            this.findPage();
+          });
         },
         handleClick(tab, event) {
           if (tab.index == 1) {

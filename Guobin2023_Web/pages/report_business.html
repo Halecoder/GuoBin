@@ -97,6 +97,7 @@
 <script src="../plugins/elementui/index.js"></script>
 <script type="text/javascript" src="../js/jquery.min.js"></script>
 <script src="../js/axios-0.18.0.js"></script>
+<script type="text/javascript" src="../js/axios-config.js"></script>
 <script>
     var vue = new Vue({
         el: '#app',
@@ -120,13 +121,13 @@
             }
         },
         created() {
-            axios.get("http://127.0.0.1:82/report/getBusinessReportData.do").then((res)=>{
+            axios.get("/report/getBusinessReportData.do").then((res)=>{
                 this.reportData = res.data.data;
             });
         },
         methods:{
             exportExcel(){
-                window.location.href = 'http://127.0.0.1:82/report/exportBusinessReport.do';
+                window.location.href = '/report/exportBusinessReport.do';
             }
         }
     })

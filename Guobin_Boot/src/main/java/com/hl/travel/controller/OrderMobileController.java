@@ -7,7 +7,6 @@ import com.hl.travel.constant.RedisMessageConstant;
 import com.hl.travel.model.pojo.Order;
 import com.hl.travel.model.vo.Result;
 import com.hl.travel.service.OrderMobileService;
-import com.hl.travel.utils.RedisUtils;
 import com.hl.travel.utils.SMSUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +27,9 @@ public class OrderMobileController {
     @Autowired
     private OrderMobileService orderMobileService;
 
+    @Autowired
+    private JedisPool jedisPool;
+
 
 
     /**
@@ -42,7 +44,7 @@ public class OrderMobileController {
         //获取用户输入的手机号
         String telephone = (String) map.get("telephone");
         //从redis中获取缓存的验证码
-        String codeInRedis = RedisUtils.getJedisPool().getResource().get(telephone + RedisMessageConstant.SENDTYPE_ORDER);
+        String codeInRedis = jedisPool.getResource().get(telephone + RedisMessageConstant.SENDTYPE_ORDER);
 
         //比对验证码
         if (codeInRedis == null || !codeInRedis.equals(validateCode)) {

@@ -59,9 +59,7 @@
                   </el-dropdown-item>
                   <el-dropdown-item divided>
                     <span style="display: block">
-                      <a href="http://localhost:82/logout.do" target="_parent"
-                        >退出登录</a
-                      >
+                      <a href="/logout.do" target="_parent">退出登录</a>
                     </span>
                   </el-dropdown-item>
                 </el-dropdown-menu>
@@ -97,7 +95,7 @@
   <script src="../plugins/elementui/index.js"></script>
   <script src="../js/axios-0.18.0.js"></script>
   <script type="text/javascript" src="../js/jquery.min.js"></script>
-  <script  type="text/javascript" src="../js/axios-config.js"></script>
+  <script type="text/javascript" src="../js/axios-config.js"></script>
   <script>
     new Vue({
       el: "#app",
@@ -216,8 +214,22 @@
       created: function () {
         //发送请求获取当前登录用户的用户名
         // 返回Result(flag,message,data)，data放置User对象
+        // axios
+        //   .get("/user/getUsername.do")
+        //   .then((response) => {
+        //     // alert(response.data.flag);
+        //     if (response.data.flag) {
+        //       this.username = response.data.data;
+        //     }
+        //   })
+        //   .catch((error) => {
+        //     this.$message.error("获取用户名失败");
+        //   });
+
+        //发送请求获取当前登录用户的用户名
+        // 返回Result(flag,message,data)，data放置User对象
         axios
-          .get("http://localhost:82/user/getUsername.do")
+          .get("/user/getUsername.do")
           .then((response) => {
             // alert(response.data.flag);
             if (response.data.flag) {

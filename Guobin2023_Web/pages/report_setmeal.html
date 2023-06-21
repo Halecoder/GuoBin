@@ -33,6 +33,7 @@
     <!-- 引入组件库 -->
     <script src="../js/vue.js"></script>
     <script src="../js/axios-0.18.0.js"></script>
+    <script type="text/javascript" src="../js/axios-config.js"></script>
     <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
         var myChart1 = echarts.init(document.getElementById('chart1'));
@@ -40,7 +41,7 @@
         // 使用刚指定的配置项和数据显示图表。
         //myChart.setOption(option);
 
-        axios.get("http://127.0.0.1:82/report/getSetmealReport.do").then((res)=>{
+        axios.get("/report/getSetmealReport.do").then((res)=>{
             myChart1.setOption({
                 title : {
                     text: '套餐预约占比',

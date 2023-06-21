@@ -24,6 +24,7 @@
     <script src="../plugins/elementui/index.js"></script>
     <script type="text/javascript" src="../js/jquery.min.js"></script>
     <script src="../js/axios-0.18.0.js"></script>
+    <script type="text/javascript" src="../js/axios-config.js"></script>
   </head>
   <body class="hold-transition">
     <div id="app">
@@ -47,7 +48,7 @@
                   >模板下载</el-button
                 >
                 <el-upload
-                  action="http://localhost:82/orderSetting/upload.do"
+                  action="/orderSetting/upload.do"
                   name="excelFile"
                   :show-file-list="false"
                   :on-success="handleSuccess"
@@ -175,7 +176,7 @@
         createdData() {
           axios
             .get(
-              "http://localhost:82/orderSetting/getOrderSettingByMonth.do?date=" +
+              "/orderSetting/getOrderSettingByMonth.do?date=" +
                 this.currentYear +
                 "-" +
                 this.currentMonth
@@ -204,7 +205,7 @@
             .then(({ value }) => {
               //发送ajax请求根据日期修改可预约人数
               axios
-                .post("http://localhost:82/orderSetting/editNumberByDate.do", {
+                .post("/orderSetting/editNumberByDate.do", {
                   orderDate: this.formatDate(
                     day.getFullYear(),
                     day.getMonth() + 1,

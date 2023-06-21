@@ -287,7 +287,7 @@
   <script src="../js/vue.js"></script>
   <script src="../plugins/elementui/index.js"></script>
   <script src="../js/axios-0.18.0.js"></script>
-  <script  type="text/javascript" src="../js/axios-config.js"></script>
+  <script type="text/javascript" src="../js/axios-config.js"></script>
   <script>
     var vue = new Vue({
       el: "#app",
@@ -325,7 +325,7 @@
             if (valid) {
               //表单校验通过，发送请求
               axios
-                .post("http://localhost:82/travelItem/edit.do", this.formData)
+                .post("/travelItem/edit.do", this.formData)
                 .then((response) => {
                   //隐藏编辑窗口
                   this.dialogFormVisible4Edit = false;
@@ -358,7 +358,7 @@
             if (valid) {
               //表单数据校验通过，发送ajax请求将表单数据提交到后台
               axios
-                .post("http://localhost:82/travelItem/add.do", this.formData)
+                .post("/travelItem/add.do", this.formData)
                 .then((response) => {
                   //隐藏新增窗口
                   this.dialogFormVisible = false;
@@ -391,13 +391,11 @@
             queryString: this.pagination.queryString, //查询条件
           };
           //请求后台
-          axios
-            .post("http://localhost:82/travelItem/findPage.do", param)
-            .then((response) => {
-              //为模型数据赋值，基于VUE的双向绑定展示到页面
-              this.dataList = response.data.rows;
-              this.pagination.total = response.data.total;
-            });
+          axios.post("/travelItem/findPage.do", param).then((response) => {
+            //为模型数据赋值，基于VUE的双向绑定展示到页面
+            this.dataList = response.data.rows;
+            this.pagination.total = response.data.total;
+          });
         },
         // 重置表单
         resetForm() {
@@ -411,18 +409,16 @@
         // 弹出编辑窗口
         handleUpdate(row) {
           //发送请求获取自由行信息
-          axios
-            .get("http://localhost:82/travelItem/findById.do?id=" + row.id)
-            .then((res) => {
-              if (res.data.flag) {
-                //设置编辑窗口属性，dialogFormVisible4Edit为true表示显示
-                this.dialogFormVisible4Edit = true;
-                //为模型数据设置值，基于VUE双向数据绑定回显到页面
-                this.formData = res.data.data;
-              } else {
-                this.$message.error("获取数据失败，请刷新当前页面");
-              }
-            });
+          axios.get("/travelItem/findById.do?id=" + row.id).then((res) => {
+            if (res.data.flag) {
+              //设置编辑窗口属性，dialogFormVisible4Edit为true表示显示
+              this.dialogFormVisible4Edit = true;
+              //为模型数据设置值，基于VUE双向数据绑定回显到页面
+              this.formData = res.data.data;
+            } else {
+              this.$message.error("获取数据失败，请刷新当前页面");
+            }
+          });
         },
         //切换页码
         handleCurrentChange(currentPage) {
@@ -438,22 +434,20 @@
             type: "warning",
             center: true,
           }).then(() => {
-            axios
-              .get("http://localhost:82/travelItem/delete.do?id=" + row.id)
-              .then((res) => {
-                if (res.data.flag) {
-                  //删除成功
-                  this.$message({
-                    message: res.data.message,
-                    type: "success",
-                  });
-                  //调用分页，获取最新分页数据
-                  this.findPage();
-                } else {
-                  //删除失败
-                  this.$message.error(res.data.message);
-                }
-              });
+            axios.get("/travelItem/delete.do?id=" + row.id).then((res) => {
+              if (res.data.flag) {
+                //删除成功
+                this.$message({
+                  message: res.data.message,
+                  type: "success",
+                });
+                //调用分页，获取最新分页数据
+                this.findPage();
+              } else {
+                //删除失败
+                this.$message.error(res.data.message);
+              }
+            });
           });
         },
       },
