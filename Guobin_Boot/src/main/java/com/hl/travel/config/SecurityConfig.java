@@ -70,6 +70,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 其他请求配置
 //                .antMatchers(MessageConstant.LOGIN_SUCCESS_URL+"/pages/**").authenticated() // 需要认证才能访问
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll() // 允许 OPTIONS 请求通过 用于前端跨域请求 预检请求
+                .antMatchers("/swagger-ui.html").permitAll() // 允许swagger-ui.html请求通过
+                .antMatchers("/v3/api-docs/**").permitAll() // 允许/v3/api-docs/**请求通过
                 .anyRequest().authenticated() // 对其他请求进行身份验证
                 .and()
                 .formLogin()
@@ -141,10 +143,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //注入userDetailsService的实现类
         auth.userDetailsService(SpringSecurityUserService).passwordEncoder(new BCryptPasswordEncoder());
     }
-
-
-
-
 
     @Bean
     public AuthenticationSuccessHandler loginSuccessHandler() {
