@@ -5,6 +5,7 @@ import com.hl.travel.constant.MessageConstant;
 import com.hl.travel.constant.RedisMessageConstant;
 
 import com.hl.travel.model.vo.Result;
+import com.hl.travel.utils.RedisUtils;
 import com.hl.travel.utils.SMSUtils;
 import com.hl.travel.utils.ValidateCodeUtils;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +21,7 @@ import redis.clients.jedis.JedisPool;
 @CrossOrigin
 public class ValidateCodeController {
 
-    @Autowired(required = false)
-    private JedisPool jedisPool;
+
 
     //预约时发送手机验证码
     @RequestMapping("/sendForOrder")
@@ -40,7 +40,7 @@ public class ValidateCodeController {
 
         System.out.println("发送的手机验证码为：" + code);
         //将生成的验证码缓存到redis
-        jedisPool.getResource().setex(telephone + RedisMessageConstant.SENDTYPE_ORDER, 5 * 60, code.toString());
+        RedisUtils.getJedisPool().getResource().setex(telephone + RedisMessageConstant.SENDTYPE_ORDER, 5 * 60, code.toString());
         //验证码发送成功
         return new Result(true, MessageConstant.SEND_VALIDATECODE_SUCCESS);
 
@@ -65,7 +65,7 @@ public class ValidateCodeController {
 
         System.out.println("发送的手机验证码为：" + code);
         //将生成的验证码缓存到redis
-        jedisPool.getResource().setex(telephone + RedisMessageConstant.SENDTYPE_LOGIN, 5 * 60, code.toString());
+        RedisUtils.getJedisPool().getResource().setex(telephone + RedisMessageConstant.SENDTYPE_LOGIN, 5 * 60, code.toString());
         //验证码发送成功
         return new Result(true, MessageConstant.SEND_VALIDATECODE_SUCCESS);
 

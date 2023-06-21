@@ -14,6 +14,7 @@ import com.hl.travel.model.vo.Result;
 import com.hl.travel.service.SetmealService;
 import com.hl.travel.utils.B2Utils;
 import com.hl.travel.utils.FileUtils;
+import com.hl.travel.utils.RedisUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -38,8 +39,6 @@ public class SetmealController {
     @Autowired
     private SetmealService setmealService;
 
-    @Autowired(required = false)
-    private JedisPool jedisPool;
 
     @RequestMapping("/upload")
     public Result upload(MultipartFile imgFile, Integer id) {
@@ -88,7 +87,7 @@ public class SetmealController {
             Result result = new Result(true, MessageConstant.PIC_UPLOAD_SUCCESS, fileName);
 
             //将上传图片名称存入Redis，基于Redis的Set集合存储
-            jedisPool.getResource().sadd(RedisConstant.SETMEAL_PIC_RESOURCES, fileName);
+            RedisUtils.getJedisPool().getResource().sadd(RedisConstant.SETMEAL_PIC_RESOURCES, fileName);
 
             return result;
         } catch (IOException | NoSuchAlgorithmException e) {

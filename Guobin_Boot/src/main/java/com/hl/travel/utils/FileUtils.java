@@ -21,16 +21,6 @@ import java.security.NoSuchAlgorithmException;
 @Component
 public  class FileUtils {
 
-    @Autowired
-    private static JedisPool jedisPool;
-
-
-//    @PostConstruct
-//    public void init(){
-//        fileUtils = this;
-//        fileUtils.jedisPool = this.jedisPool;
-//    }
-
 
     // 获取文件Hash值
     public static String calculateFileHash(MultipartFile file) throws IOException, NoSuchAlgorithmException {
@@ -60,22 +50,22 @@ public  class FileUtils {
         String HashKey = RedisConstant.SETMEAL_PIC_HASH_ID;
 
         //如果Redis没有存该Key,进行存储
-        if (!(jedisPool.getResource().exists(HashKey))) {
+        if (!(RedisUtils.getJedisPool().getResource().exists(HashKey))) {
             // 创建一个String
-            jedisPool.getResource().set(HashKey, hash);
+            RedisUtils.getJedisPool().getResource().set(HashKey, hash);
             //创建唯一标识Id
-            jedisPool.getResource().set(IdKey, String.valueOf(id));
+            RedisUtils.getJedisPool().getResource().set(IdKey, String.valueOf(id));
             return false;
 
         } else {
 
             //检查Hash值是否相同
-            if (jedisPool.getResource().get(HashKey).equals(hash)&&jedisPool.getResource().get(IdKey).equals(String.valueOf(id))) {
+            if (RedisUtils.getJedisPool().getResource().get(HashKey).equals(hash)&&RedisUtils.getJedisPool().getResource().get(IdKey).equals(String.valueOf(id))) {
                 return true;
             } else {
                 //如果不相同,进行更新
-                jedisPool.getResource().set(HashKey, hash);
-                jedisPool.getResource().set(IdKey, String.valueOf(id));
+                RedisUtils.getJedisPool().getResource().set(HashKey, hash);
+                RedisUtils.getJedisPool().getResource().set(IdKey, String.valueOf(id));
                 return false;
             }
         }

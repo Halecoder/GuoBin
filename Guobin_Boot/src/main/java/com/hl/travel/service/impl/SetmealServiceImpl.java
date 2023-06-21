@@ -10,6 +10,7 @@ import com.hl.travel.model.pojo.Setmeal;
 import com.hl.travel.model.vo.PageResult;
 import com.hl.travel.service.SetmealService;
 
+import com.hl.travel.utils.RedisUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,8 +30,6 @@ public class SetmealServiceImpl implements SetmealService {
     private SetmealDao setmealDao;
 
 
-    @Autowired(required = false)
-    private   JedisPool jedisPool;
 
 
     @Override
@@ -60,7 +59,7 @@ public class SetmealServiceImpl implements SetmealService {
 
     //将图片名称保存到Redis
     private void savePicToRedis(String pic){
-        jedisPool.getResource().sadd(RedisConstant.SETMEAL_PIC_DB_RESOURCES,pic);
+        RedisUtils.getJedisPool().getResource().sadd(RedisConstant.SETMEAL_PIC_DB_RESOURCES,pic);
     }
 
     @Override
