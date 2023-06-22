@@ -13,8 +13,12 @@
     <link rel="icon" href="../img/asset-favico.ico" />
     <title>预约</title>
     <link rel="stylesheet" href="../css/page-health-order.css" />
+    <link rel="stylesheet" href="../css/page-loding.css" />
   </head>
   <body data-spy="scroll" data-target="#myNavbar" data-offset="150">
+    <div id="loading-container" class="loading-container">
+      <div class="loading-spinner"></div>
+    </div>
     <div class="app" id="app">
       <!-- 页面头部 -->
       <div class="top-header">
@@ -56,19 +60,112 @@
     <script src="../plugins/vue/vue.js"></script>
     <script src="../plugins/vue/axios-0.18.0.js"></script>
     <script src="../plugins/vue/axios-config.js"></script>
+    <script src="../plugins/vue/page-loading.js"></script>
     <script>
       var vue = new Vue({
         el: "#app",
         data: {
           setmealList: [],
+          newData: [],
+          currentPage: "",
+          pageSize: "",
+          total: "",
         },
+        // mounted() {
+        //   // 获取所有旅游套餐
+        //   axios.get("/setmeal/getSetmeal.do").then((response) => {
+        //     if (response.data.flag) {
+        //       this.setmealList = response.data.data;
+        //     }
+        //   });
+        // },
+
         mounted() {
-          // 获取所有旅游套餐
-          axios.get("/setmeal/getSetmeal.do").then((response) => {
-            if (response.data.flag) {
-              this.setmealList = response.data.data;
+          // 初始化页码和每页数量
+          this.currentPage = 1;
+          this.pageSize = 10;
+
+          // 添加滚动事件监听
+          window.addEventListener("scroll", this.handleScroll, true);
+
+          // 首次加载数据
+          this.loadData();
+        },
+
+        methods: {
+          handleScroll() {
+            // 设备/屏幕高度
+            let clientHeight =
+              document.documentElement.clientHeight ||
+              document.body.clientHeight;
+            // 滚动区域
+            // let scrollObj = document.getElementsByClassName("content-cent")[0];
+            let scrollObj = document.documentElement;
+            // 滚动区域到头部的距离
+            let scrollTop = scrollObj.scrollTop;
+            // 滚动条的总高度
+            let scrollHeight = scrollObj.scrollHeight;
+
+            // 判断滚动到最顶部
+            if (scrollTop === 0) {
+              this.loadPreviousPage();
             }
-          });
+            // 添加容差值 tolerance，用于判断是否到达底部
+            let tolerance = 10; // 可根据需要调整容差值
+            if (scrollTop + clientHeight >= scrollHeight - tolerance) {
+              this.loadNextPage();
+            }
+          },
+
+          loadPreviousPage() {
+            showLoading();
+            if (this.currentPage > 1) {
+              this.currentPage--;
+              this.loadData();
+            } else {
+              hideLoading();
+            }
+          },
+
+          loadNextPage() {
+            // 在数据加载前显示加载动画
+            showLoading();
+            // 判断是否还有下一页数据
+            if (this.currentPage * this.pageSize < this.total) {
+              this.currentPage++;
+              this.loadData();
+              // console.log(this.currentPage);
+            } else {
+              hideLoading();
+            }
+          },
+
+          loadData() {
+            // 隐藏加载动画
+            hideLoading();
+            axios
+              .post("/setmeal/findPage.do", {
+                currentPage: this.currentPage,
+                pageSize: this.pageSize,
+                queryString: "", // 可根据需要添加查询条件
+              })
+              .then((response) => {
+                //获取总页数
+                this.total = response.data.total;
+                // if (response.data.flag) {
+                // 处理返回的数据
+                // this.newData = response.data.rows;
+                // // 追加或合并到原有数据列表
+                // this.setmealList = [...this.setmealList, ...this.newData];
+                this.setmealList = response.data.rows;
+                // }
+              });
+          },
+        },
+
+        beforeDestroy() {
+          // 移除滚动事件监听
+          window.removeEventListener("scroll", this.handleScroll);
         },
       });
     </script>
