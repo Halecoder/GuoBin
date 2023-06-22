@@ -9,6 +9,7 @@ import com.hl.travel.model.vo.Result;
 import com.hl.travel.service.TravelItemService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -29,6 +30,7 @@ public class TravelItemController {
      * @return
      */
     @PostMapping("/add")
+    @PreAuthorize("hasAuthority('TRAVELITEM_ADD')")
     public Result add(@RequestBody TravelItem travelItem) {
         try {
             travelItemService.add(travelItem);
@@ -44,6 +46,7 @@ public class TravelItemController {
      * @return 分页结果
      */
     @PostMapping("/findPage")
+    @PreAuthorize("hasAuthority('TRAVELITEM_QUERY')")
     public PageResult findPage(@RequestBody QueryPageBean queryPageBean) {
         PageResult pageResult = travelItemService.findPage(
                 queryPageBean.getCurrentPage(),
@@ -59,6 +62,7 @@ public class TravelItemController {
      * @return
      */
     @GetMapping("/delete")
+    @PreAuthorize("hasAuthority('TRAVELITEM_DELETE')")
     public Result delete(Integer id) {
         try {
             travelItemService.deleteById(id);
@@ -79,6 +83,7 @@ public class TravelItemController {
      * @return
      */
     @PostMapping("/edit")
+    @PreAuthorize("hasAuthority('TRAVELITEM_EDIT')")
     public Result edit(@RequestBody TravelItem travelItem){
         travelItemService.edit(travelItem);
         return new Result(true,MessageConstant.EDIT_TRAVELITEM_SUCCESS);
@@ -90,6 +95,7 @@ public class TravelItemController {
      * @return
      */
     @GetMapping("/findById")
+    @PreAuthorize("hasAuthority('TRAVELITEM_QUERY')")
     public Result findById(Integer id){
         TravelItem travelItem =  travelItemService.findById(id);
         return new Result(true,MessageConstant.QUERY_TRAVELITEM_SUCCESS,travelItem);
@@ -100,6 +106,7 @@ public class TravelItemController {
      * @return 查询所有自由行
      */
     @GetMapping("/findAllItem")
+    @PreAuthorize("hasAuthority('TRAVELITEM_QUERY')")
     public Result findAllItem(){
         return new Result(true,MessageConstant.QUERY_TRAVELITEM_SUCCESS,travelItemService.findAllItem());
     }
