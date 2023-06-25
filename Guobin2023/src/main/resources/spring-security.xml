@@ -92,16 +92,16 @@
         <!--
             authentication-provider：认证提供者，执行具体的认证逻辑
         -->
-<!--        <security:authentication-provider user-service-ref="springSecurityUserService">-->
-<!--            &lt;!&ndash;指定密码加密策略&ndash;&gt;-->
-<!--            <security:password-encoder ref="passwordEncoder"></security:password-encoder>-->
-<!--        </security:authentication-provider>-->
-
-        <security:authentication-provider>
-            <security:user-service>
-                <security:user name="admin" authorities="ROLE_ADMIN" password="{noop}admin"></security:user>
-            </security:user-service>
+        <security:authentication-provider user-service-ref="springSecurityUserService">
+            <!--指定密码加密策略-->
+            <security:password-encoder ref="passwordEncoder"></security:password-encoder>
         </security:authentication-provider>
+
+<!--        <security:authentication-provider>-->
+<!--            <security:user-service>-->
+<!--                <security:user name="admin" authorities="ROLE_ADMIN" password="{noop}admin"></security:user>-->
+<!--            </security:user-service>-->
+<!--        </security:authentication-provider>-->
 
     </security:authentication-manager>
 
