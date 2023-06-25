@@ -1,0 +1,34 @@
+server:
+  port: 8002
+
+# 服务名
+spring:
+  application:
+    name: guobin-core
+# 配置Mysql
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/guobin2023?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: 20020829
+    type: com.alibaba.druid.pool.DruidDataSource
+
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+
+
+# 把自己注册到Eureka
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8000/eureka/
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+    lease-renewal-interval-in-seconds: 1
+    lease-expiration-duration-in-seconds: 2
+
+
+
+

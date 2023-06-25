@@ -1,16 +1,11 @@
 package com.hl.travel.controller;
 
 
-
 import com.hl.travel.constant.MessageConstant;
-
 import com.hl.travel.model.pojo.OrderSetting;
 import com.hl.travel.model.vo.Result;
-import com.hl.travel.service.OrderMobileService;
 import com.hl.travel.service.OrderSettingService;
 import com.hl.travel.utils.POIUtils;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,7 +23,7 @@ import java.util.Map;
 @RestController
 @CrossOrigin
 @RequestMapping("/orderSetting")
-@Tag(name = "后台预约设置相关接口")
+//@Tag(name = "后台预约设置相关接口")
 public class OrderSettingController {
 
     @Autowired
@@ -99,6 +94,26 @@ public class OrderSettingController {
 
             orderSettingService.editNumberByDate(orderSetting);
             return new Result(true,MessageConstant.ORDERSETTING_SUCCESS);
+    }
+
+
+    //添加Feign接口
+
+    /**
+     * 根据日期查询预约设置信息
+     * @param orderDate 日期
+     * @return
+     */
+    @PostMapping("/api/findByOrderDate")
+    public OrderSetting findByOrderDate(Date orderDate){
+
+        return orderSettingService.findByOrderDate(orderDate);
+    }
+
+
+    @RequestMapping("/api/editReservationsByOrderDate")
+    public void editReservationsByOrderDate(Date orderDate){
+        orderSettingService.editReservationsByOrderDate(orderDate);
     }
 
 

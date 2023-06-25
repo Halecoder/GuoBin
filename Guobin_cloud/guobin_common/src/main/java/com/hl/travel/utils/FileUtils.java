@@ -1,8 +1,10 @@
 package com.hl.travel.utils;
 
 import com.hl.travel.constant.RedisConstant;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
+import redis.clients.jedis.JedisPool;
 
 import java.io.IOException;
 import java.security.MessageDigest;
@@ -17,6 +19,11 @@ import java.security.NoSuchAlgorithmException;
 
 @Component
 public  class FileUtils {
+
+
+    @Autowired
+    private static JedisPool jedisPool;
+
 
 
     // 获取文件Hash值
@@ -47,22 +54,22 @@ public  class FileUtils {
         String HashKey = RedisConstant.SETMEAL_PIC_HASH_ID;
 
         //如果Redis没有存该Key,进行存储
-        if (!(RedisUtils.getJedisPool().getResource().exists(HashKey))) {
+        if (!(jedisPool.getResource().exists(HashKey))) {
             // 创建一个String
-            RedisUtils.getJedisPool().getResource().set(HashKey, hash);
+            jedisPool.getResource().set(HashKey, hash);
             //创建唯一标识Id
-            RedisUtils.getJedisPool().getResource().set(IdKey, String.valueOf(id));
+            jedisPool.getResource().set(IdKey, String.valueOf(id));
             return false;
 
         } else {
 
             //检查Hash值是否相同
-            if (RedisUtils.getJedisPool().getResource().get(HashKey).equals(hash)&&RedisUtils.getJedisPool().getResource().get(IdKey).equals(String.valueOf(id))) {
+            if (jedisPool.getResource().get(HashKey).equals(hash)&&jedisPool.getResource().get(IdKey).equals(String.valueOf(id))) {
                 return true;
             } else {
                 //如果不相同,进行更新
-                RedisUtils.getJedisPool().getResource().set(HashKey, hash);
-                RedisUtils.getJedisPool().getResource().set(IdKey, String.valueOf(id));
+                jedisPool.getResource().set(HashKey, hash);
+                jedisPool.getResource().set(IdKey, String.valueOf(id));
                 return false;
             }
         }

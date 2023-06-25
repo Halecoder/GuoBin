@@ -15,6 +15,19 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <!--标识SPring Cloud版本-->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Greenwich.SR5</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -27,6 +40,12 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter</artifactId>
     </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+        </dependency>
+
 
         <!--mybatis相关的依赖-->
         <dependency>
@@ -46,44 +65,23 @@
     </dependency>
 
 
-<!--        &lt;!&ndash;mysql相关依赖&ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>mysql</groupId>-->
-<!--            <artifactId>mysql-connector-java</artifactId>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>com.auth0</groupId>-->
-<!--            <artifactId>java-jwt</artifactId>-->
-<!--            <version>3.14.0</version>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>cn.hutool</groupId>-->
-<!--            <artifactId>hutool-all</artifactId>-->
-<!--            <version>5.4.3</version>-->
-<!--        </dependency>-->
-
-<!--        &lt;!&ndash;pagehepler分页插件&ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>com.github.pagehelper</groupId>-->
-<!--            <artifactId>pagehelper-spring-boot-starter</artifactId>-->
-<!--            <version>1.4.1</version>-->
-<!--        </dependency>-->
 
 
 
-<!--        &lt;!&ndash;log4j2日志依赖&ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-log4j2</artifactId>-->
-<!--        </dependency>-->
 
-<!--        &lt;!&ndash;aop依赖&ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-aop</artifactId>-->
-<!--        </dependency>-->
+
+
+        <!--log4j2日志依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
+        </dependency>
+
+        <!--aop依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
 
 
 
@@ -105,18 +103,7 @@
 <!--        </dependency>-->
 
 
-<!--        &lt;!&ndash; druid连接池 &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>com.alibaba</groupId>-->
-<!--            <artifactId>druid</artifactId>-->
-<!--            <version>${druid.version}</version>-->
-<!--        </dependency>-->
-<!--        &lt;!&ndash; 文件上传 &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>commons-fileupload</groupId>-->
-<!--            <artifactId>commons-fileupload</artifactId>-->
-<!--            <version>${commons-fileupload.version}</version>-->
-<!--        </dependency>-->
+
 <!--        <dependency>-->
 <!--            <groupId>junit</groupId>-->
 <!--            <artifactId>junit</artifactId>-->
@@ -130,16 +117,7 @@
 
 
 
-<!--        <dependency>-->
-<!--            <groupId>javassist</groupId>-->
-<!--            <artifactId>javassist</artifactId>-->
-<!--            <version>3.12.1.GA</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>commons-codec</groupId>-->
-<!--            <artifactId>commons-codec</artifactId>-->
-<!--            <version>1.10</version>-->
-<!--        </dependency>-->
+
 <!--        &lt;!&ndash;任务调度&ndash;&gt;-->
 <!--        <dependency>-->
 <!--            <groupId>org.quartz-scheduler</groupId>-->
@@ -151,89 +129,18 @@
 <!--            <artifactId>quartz-jobs</artifactId>-->
 <!--            <version>${quartz.version}</version>-->
 <!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>com.sun.jersey</groupId>-->
-<!--            <artifactId>jersey-client</artifactId>-->
-<!--            <version>1.18.1</version>-->
-<!--        </dependency>-->
-<!--        &lt;!&ndash;七牛云服务平台，第三方服务（图片上传）&ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>com.qiniu</groupId>-->
-<!--            <artifactId>qiniu-java-sdk</artifactId>-->
-<!--            <version>7.2.0</version>-->
-<!--        </dependency>-->
-<!--        &lt;!&ndash;POI报表（EXCEL）&ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.apache.poi</groupId>-->
-<!--            <artifactId>poi</artifactId>-->
-<!--            <version>${poi.version}</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.apache.poi</groupId>-->
-<!--            <artifactId>poi-ooxml</artifactId>-->
-<!--            <version>${poi.version}</version>-->
-<!--        </dependency>-->
-<!--        &lt;!&ndash;redis&ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>redis.clients</groupId>-->
-<!--            <artifactId>jedis</artifactId>-->
-<!--            <version>${jedis.version}</version>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>com.github.penggle</groupId>-->
-<!--            <artifactId>kaptcha</artifactId>-->
-<!--            <version>2.3.2</version>-->
-<!--            <exclusions>-->
-<!--                <exclusion>-->
-<!--                    <groupId>javax.servlet</groupId>-->
-<!--                    <artifactId>javax.servlet-api</artifactId>-->
-<!--                </exclusion>-->
-<!--            </exclusions>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>dom4j</groupId>-->
-<!--            <artifactId>dom4j</artifactId>-->
-<!--            <version>1.6.1</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>xml-apis</groupId>-->
-<!--            <artifactId>xml-apis</artifactId>-->
-<!--            <version>1.4.01</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>javax.servlet</groupId>-->
-<!--            <artifactId>javax.servlet-api</artifactId>-->
-<!--            <version>${servlet-api.version}</version>-->
-<!--            <scope>provided</scope>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>commons-lang</groupId>-->
-<!--            <artifactId>commons-lang</artifactId>-->
-<!--            <version>2.6</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.eclipse.jetty</groupId>-->
-<!--            <artifactId>jetty-util</artifactId>-->
-<!--            <version>9.3.7.v20160115</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.projectlombok</groupId>-->
-<!--            <artifactId>lombok</artifactId>-->
-<!--            <version>1.18.26</version>-->
-<!--            <scope>provided</scope>-->
-<!--        </dependency>-->
 
 
 
 
 
-<!--        <dependency>-->
-<!--            <groupId>org.slf4j</groupId>-->
-<!--            <artifactId>slf4j-log4j12</artifactId>-->
-<!--            <version>1.7.22</version>-->
-<!--        </dependency>-->
+
+
+
+
+
+
+
 
 
 
@@ -262,21 +169,21 @@
 
 
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <!-- 必须添加此处配置javadoc才生效，
-               注：该配置和lombok冲突，存在该配置则导致lombok编译报错 -->
-                    <annotationProcessorPaths>
-                        <path>
-                            <groupId>com.github.therapi</groupId>
-                            <artifactId>therapi-runtime-javadoc-scribe</artifactId>
-                            <version>0.15.0</version>
-                        </path>
-                    </annotationProcessorPaths>
-                </configuration>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-compiler-plugin</artifactId>-->
+<!--                <configuration>-->
+<!--                    &lt;!&ndash; 必须添加此处配置javadoc才生效，-->
+<!--               注：该配置和lombok冲突，存在该配置则导致lombok编译报错 &ndash;&gt;-->
+<!--                    <annotationProcessorPaths>-->
+<!--                        <path>-->
+<!--                            <groupId>com.github.therapi</groupId>-->
+<!--                            <artifactId>therapi-runtime-javadoc-scribe</artifactId>-->
+<!--                            <version>0.15.0</version>-->
+<!--                        </path>-->
+<!--                    </annotationProcessorPaths>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
 
 
             <!-- springdoc插件（用于在verify阶段生成openapi.json） -->
@@ -335,7 +242,10 @@
     <packaging>pom</packaging>
     <modules>
         <module>guobin_common</module>
-        <module>guobin_app</module>
-        <module>guobin_web</module>
+        <module>guobin_member</module>
+        <module>eureka-server</module>
+        <module>guobin_core</module>
+        <module>guobin_map</module>
+        <module>guobin_feign</module>
     </modules>
 </project>
