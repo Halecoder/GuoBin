@@ -3,3 +3,10 @@ spring:
     loadbalancer:
       ribbon:
         enabled: true
+
+
+feign:
+  hystrix:
+    enabled: false
+  httpclient:
+    connection-timeout: 30000

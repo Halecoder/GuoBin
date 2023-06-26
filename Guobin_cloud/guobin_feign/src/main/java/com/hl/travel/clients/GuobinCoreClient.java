@@ -9,15 +9,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 import java.util.Map;
 
-@FeignClient("guobin-core")
+@FeignClient(value = "guobin-core")
 public interface GuobinCoreClient {
-    @RequestMapping("/api/findByOrderDate")
+    @RequestMapping("/orderSetting/api/findByOrderDate")
     OrderSetting findByOrderDate(String orderDate);
 
-    @RequestMapping("/api/editReservationsByOrderDate")
+    @RequestMapping("/orderSetting/api/editReservationsByOrderDate")
     public void editReservationsByOrderDate(OrderSetting orderSetting);
 
-    @RequestMapping("/api/findSetmealCount")
+    @RequestMapping("/setmeal/api/findSetmealCount")
     List<Map<String, Object>> findSetmealCount();
 
 }

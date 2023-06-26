@@ -77,4 +77,6 @@ public class MessageConstant {
     public static final String PIC_RAPID_UPLOAD = "图片重复上传！";
     public static final String REGIS_SUCCESS = "注册成功";
     public static final String LOGIN_SUCCESS_URL = "http://127.0.0.1:5501";
+
+    public static final String LOGIN_FRONT_URL = "http://localhost:5500";
 }
