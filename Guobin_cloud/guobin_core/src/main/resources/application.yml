@@ -8,7 +8,7 @@ spring:
 # 配置Mysql
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/guobin2023?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    url: jdbc:mysql://localhost:3306/guobin2023?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&useSSL=false
     username: root
     password: 20020829
     type: com.alibaba.druid.pool.DruidDataSource
@@ -28,6 +28,13 @@ eureka:
     instance-id: ${spring.cloud.client.ip-address}:${server.port}
     lease-renewal-interval-in-seconds: 1
     lease-expiration-duration-in-seconds: 2
+
+## 开启负载均衡
+#ribbon:
+#  eureka:
+#    enabled: true
+#  ReadTimeout: 60000  #读出超时的时间
+#  ConnectTimeout: 60000 #连接超时的时间
 
 
 

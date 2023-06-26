@@ -71,11 +71,11 @@
 
 
 
-        <!--log4j2日志依赖-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-log4j2</artifactId>
-        </dependency>
+<!--        &lt;!&ndash;log4j2日志依赖&ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-log4j2</artifactId>-->
+<!--        </dependency>-->
 
         <!--aop依赖-->
         <dependency>
@@ -243,9 +243,10 @@
     <modules>
         <module>guobin_common</module>
         <module>guobin_member</module>
-        <module>eureka-server</module>
+        <module>eureka_server</module>
         <module>guobin_core</module>
         <module>guobin_map</module>
         <module>guobin_feign</module>
+        <module>zuul_server</module>
     </modules>
 </project>

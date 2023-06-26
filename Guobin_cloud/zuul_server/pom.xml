@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>eureka-server</artifactId>
+    <artifactId>zuul_server</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -12,28 +12,23 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <parent>
-        <artifactId>Guobin_Cloud</artifactId>
-        <groupId>com.hl.travel</groupId>
-        <version>1.0-SNAPSHOT</version>
-    </parent>
-
-
-
-    <name>eureka-server</name>
-    <description>Spring Cloud Eureka</description>
-
     <dependencies>
-
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-zuul</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.hl.travel</groupId>
+            <artifactId>guobin_common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
-
-
-    <!--spring的maven项目必备的一个插件-->
     <build>
         <plugins>
             <plugin>
@@ -43,22 +38,9 @@
         </plugins>
     </build>
 
-
-
-    <repositories>
-        <repository>
-            <id>alimaven</id>
-            <name>aliyun maven</name>
-            <layout>default</layout>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-        </repository>
-    </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>alimaven</id>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-        </pluginRepository>
-    </pluginRepositories>
-
+    <parent>
+        <artifactId>Guobin_Cloud</artifactId>
+        <groupId>com.hl.travel</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
 </project>

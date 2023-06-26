@@ -1,0 +1,79 @@
+server:
+    port: 82
+
+spring:
+  application:
+    name: zuul-server
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8000/eureka/
+  instance:
+    prefer-ip-address: true
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: DEBUG
+    org.springframework.cloud.netflix.zuul: DEBUG
+    org.springframework.boot.actuate: DEBUG
+    org.springframework.security: DEBUG
+  pattern:
+    console: "%clr(%d{${LOG_DATEFORMAT_PATTERN:HH:mm:ss.SSS}}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}"
+
+
+zuul:
+  sensitiveHeaders: Cookie,Set-Cookie
+  ignored-headers: Access-Control-Allow-Credentials, Access-Control-Allow-Origin, Access-Control-Allow-Methods
+  sensitive-headers: Access-Control-Allow-Origin,Access-Control-Allow-Methods
+# 配置路径映射
+  routes:
+#    prefix : /guobin-core  # 公共前缀 当收到/travelItem/findPage.do的请求时，Zuul将会将请求转发到guobin-core微服务的/guobin-core/travelItem/findPage.do路径。
+    travelItem:
+        path: /travelItem/**
+        serviceId: guobin-core   # 一定要注意这里的serviceId要和guobin-core的spring.application.name一致   我把guobin-core写成了guobin_core
+        stripPrefix: false # 不要去掉前缀
+    travelGroup:
+        path: /travelGroup/**
+        serviceId: guobin-core
+        stripPrefix: false
+    setmeal:
+        path: /setmeal/**
+        serviceId: guobin-core
+        stripPrefix: false
+    orderSetting:
+        path: /orderSetting/**
+        serviceId: guobin-core
+        stripPrefix: false
+
+    login:
+      path: /login/**
+      serviceId: guobin-member
+      stripPrefix: false
+    order:
+      path: /order/**
+      serviceId: guobin-member
+      stripPrefix: false
+    report:
+      path: /report/**
+      serviceId: guobin-member
+      stripPrefix: false
+    validateCode:
+      path: /validateCode/**
+      serviceId: guobin-member
+      stripPrefix: false
+
+
+    address:
+        path: /address/**
+        serviceId: guobin-map
+        stripPrefix: false
+
+
+# 开启负载均衡
+ribbon:
+  eureka:
+    enabled: true
+  ReadTimeout: 60000  #读出超时的时间
+  ConnectTimeout: 60000 #连接超时的时间
