@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import redis.clients.jedis.JedisPool;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -20,10 +21,15 @@ import java.security.NoSuchAlgorithmException;
 @Component
 public  class FileUtils {
 
-    @Autowired
     private static JedisPool jedisPool;
 
+    @Autowired
+    private JedisPool injectedJedisPool;
 
+    @PostConstruct
+    private void init() {
+        jedisPool = injectedJedisPool;
+    }
 
     // 获取文件Hash值
     public static String calculateFileHash(MultipartFile file) throws IOException, NoSuchAlgorithmException {
