@@ -13,7 +13,7 @@ spring:
       use-suffix-pattern: true
 
   application:
-    name: guobin-member
+    name: guobin-upload
   # 配置Mysql
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
