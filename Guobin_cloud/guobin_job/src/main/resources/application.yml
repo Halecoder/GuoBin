@@ -1,0 +1,14 @@
+xxl:
+  job:
+    enable: true
+    adminAddresses: http://127.0.0.1:9000/xxl-job-admin
+    accessToken: default_token
+    appname: clear-image-job
+    address:
+    ip:
+    port: 9999
+    logpath: /joblogs
+    logretentiondays: 30
+
+server:
+  port: 8005

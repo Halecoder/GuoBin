@@ -1,0 +1,20 @@
+
+`	java:S112X"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ
+`	java:S112Z"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ
+P
+java:S1141N"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ
+}
+java:S1488t"bImmediately return this expression instead of assigning it to the temporary variable "pageResult".(‡÷ï¤ÿÿÿÿÿ
+}
+java:S1488¢"fImmediately return this expression instead of assigning it to the temporary variable "travelGroupIds".(Şîºá
+s
+java:S1488ï"\Immediately return this expression instead of assigning it to the temporary variable "list".(¹˜·À
+c
+java:S22599"NA "NullPointerException" could be thrown; "originalFilename" is nullable here.(­ÿT
+N	java:S106K"9Replace this use of System.out or System.err by a logger.(ÒĞ­Ø
+_
+java:S2147Y"DCombine this catch with the one at line 87, which has the same body.(Ÿ¾ñ«ùÿÿÿÿ
+U	java:S899S";Do something with the "boolean" value returned by "delete".(¼·áüÿÿÿÿ
+i
+java:S4042S"NUse "java.nio.file.Files#delete" here for better messages on error conditions.(¼·áüÿÿÿÿ
+S	java:S106T"9Replace this use of System.out or System.err by a logger.(êÍƒìøÿÿÿÿ

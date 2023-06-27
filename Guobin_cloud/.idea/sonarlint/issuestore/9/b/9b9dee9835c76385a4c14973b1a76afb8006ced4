@@ -1,0 +1,8 @@
+
+`	java:S1120"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ
+J
+java:S3740Q"/Provide the parametrized type for this generic.(€¢‹òýÿÿÿÿ
+f	java:S1175"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(žççŽ
+f	java:S1178"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ä«Øö
+B
+java:S18749",Remove this use of "Date"; it is deprecated.(ÖÿœÃ

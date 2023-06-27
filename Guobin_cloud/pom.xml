@@ -249,5 +249,6 @@
         <module>guobin_feign</module>
         <module>zuul_server</module>
         <module>guobin_upload</module>
+        <module>guobin_job</module>
     </modules>
 </project>

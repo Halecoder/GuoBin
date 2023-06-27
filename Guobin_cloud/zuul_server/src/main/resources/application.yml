@@ -30,6 +30,11 @@ zuul:
   ignored-headers: Access-Control-Allow-Credentials, Access-Control-Allow-Origin, Access-Control-Allow-Methods
   sensitive-headers: Access-Control-Allow-Origin,Access-Control-Allow-Methods
   ignored-services: guobin-upload
+  # 屏蔽内部feign
+  ignored-patterns:
+    - /orderSetting/api/findByOrderDate
+    - /orderSetting/api/editReservationsByOrderDate
+    - /setmeal/api/findSetmealCount
 # 配置路径映射
   routes:
 #    prefix : /guobin-core  # 公共前缀 当收到/travelItem/findPage.do的请求时，Zuul将会将请求转发到guobin-core微服务的/guobin-core/travelItem/findPage.do路径。
