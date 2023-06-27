@@ -248,5 +248,6 @@
         <module>guobin_map</module>
         <module>guobin_feign</module>
         <module>zuul_server</module>
+        <module>guobin_upload</module>
     </modules>
 </project>

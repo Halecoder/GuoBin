@@ -20,7 +20,6 @@ import java.security.NoSuchAlgorithmException;
 @Component
 public  class FileUtils {
 
-
     @Autowired
     private static JedisPool jedisPool;
 

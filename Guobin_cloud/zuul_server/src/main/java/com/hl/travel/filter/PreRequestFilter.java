@@ -8,6 +8,7 @@ import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.Enumeration;
 
 /**
@@ -38,6 +39,7 @@ public class PreRequestFilter extends ZuulFilter {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
         String requestURI = request.getRequestURI();
+
 
         // 去除后缀.do逻辑
         if (requestURI.endsWith(".do")) {

@@ -228,7 +228,7 @@
                           <el-form-item label="上传图片">
                             <el-upload
                               class="avatar-uploader"
-                              action="/setmeal/upload.do?id=0"
+                              action="http://localhost:8004/image/upload.do?id=0"
                               :auto-upload="autoUpload"
                               name="imgFile"
                               :show-file-list="false"
@@ -476,7 +476,7 @@
         dialogFormVisible: false, //控制添加窗口显示/隐藏
         dialogFormVisible4Edit: false, //控制编辑窗口显示/隐藏
 
-        uploadUrl: "/setmeal/upload.do", //图片上传的地址
+        uploadUrl: "/image/upload.do", //图片上传的地址
       },
       created() {
         this.findPage();
@@ -565,7 +565,7 @@
           this.activeName = "first";
 
           //更改图片上传的地址
-          this.uploadUrl = "/setmeal/upload.do?id=" + row.id;
+          this.uploadUrl = "http://localhost:8004/image/upload.do?id=" + row.id;
 
           // 2.查询套餐基本信息
           axios.get("/setmeal/findById.do?id=" + row.id).then((response) => {

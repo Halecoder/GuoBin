@@ -34,7 +34,6 @@ import java.util.*;
 @CrossOrigin
 @RequestMapping("/report")
 @RestController
-//@Tag(name = "报表相关接口")
 public class ReportController {
 
 
@@ -79,7 +78,6 @@ public class ReportController {
     public Result getSetmealReport() {
         // 组织套餐名称+套餐名称对应的数据
         List<Map<String, Object>> list = guobinCoreClient.findSetmealCount();
-
         Map<String, Object> map = new HashMap<>();
         map.put("setmealCount", list);
         // 组织套餐名称集合（格式：List<"尚硅谷三八节福利套餐","尚硅谷旅游套餐">）

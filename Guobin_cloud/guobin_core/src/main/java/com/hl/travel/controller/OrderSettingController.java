@@ -30,44 +30,6 @@ public class OrderSettingController {
     private OrderSettingService orderSettingService;
 
 
-    /**
-     * 批量导入预约设置
-     * @param excelFile 上传的文件
-     * @return
-     */
-    @GetMapping("/upload")
-    public Result upload(MultipartFile excelFile) {
-
-        //1.使用POI解析文件 得到List<String[]> list
-
-        List<String[]> excels;
-
-        try {
-            excels = POIUtils.readExcel(excelFile);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-
-        //2.把List<String[]> list转成 List<OrderSetting> list
-        List<OrderSetting> OrderSettings = new ArrayList<>();
-
-        for (String[] excel : excels) {
-            OrderSetting OrderSetting = new OrderSetting();
-            OrderSetting.setOrderDate(new Date(excel[0]));
-            OrderSetting.setNumber(Integer.parseInt(excel[1]));
-            OrderSettings.add(OrderSetting);
-        }
-
-
-        //3.调用业务 进行保存
-
-        orderSettingService.add(OrderSettings);
-
-        return new Result(true, MessageConstant.IMPORT_ORDERSETTING_SUCCESS);
-
-
-    }
 
     /**
      * 根据月份查询预约数据
