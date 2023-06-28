@@ -46,12 +46,34 @@ spring:
               - Path=/orderSetting/*.do
           filters:
               - RewritePath=/orderSetting/(?<segment>.+)\.do, /orderSetting/${segment}
-        - id: login
-          uri: lb://guobin-member
+#
+#        # 会员服务登录
+#        - id: loginMemeber
+#          uri: lb://guobin-member
+#          predicates:
+#              - Path=/login.do
+#          filters:
+#              - RewritePath=/login/(?<segment>.+)\.do, /login/${segment}
+
+
+        # 后台管理登录鉴权
+        - id: loginAdmin
+          uri: lb://guobin-oauth
           predicates:
-              - Path=/login/*.do
+              - Path=/login.do
+
+        - id: getUserInfo
+          uri: lb://guobin-role
+          predicates:
+              - Path=/user/*.do
           filters:
-              - RewritePath=/login/(?<segment>.+)\.do, /login/${segment}
+              - RewritePath=/user/(?<segment>.+)\.do, /user/${segment}
+
+        - id: logout
+          uri: lb://guobin-oauth
+          predicates:
+              - Path=/logout.do
+
         - id: order
           uri: lb://guobin-member
           predicates:
@@ -94,6 +116,7 @@ logging:
     org.springframework.cloud.netflix.zuul: DEBUG
     org.springframework.boot.actuate: DEBUG
     org.springframework.security: DEBUG
+    org.springframework.cloud.gateway: DEBUG
   pattern:
     console: "%clr(%d{${LOG_DATEFORMAT_PATTERN:HH:mm:ss.SSS}}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}"
 

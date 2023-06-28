@@ -1,0 +1,52 @@
+
+server:
+  port: 8080
+
+
+spring:
+  application:
+      name: guobin-oauth
+
+
+
+  # 配置Redis
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
+    database: 1 # 默认为0
+
+
+  session:
+    store-type: redis
+    redis:
+      flush-mode: on-save
+      namespace: spring:session
+
+
+
+
+  # 把自己注册到Eureka
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8000/eureka/
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+    lease-renewal-interval-in-seconds: 1
+    lease-expiration-duration-in-seconds: 2
+
+
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: DEBUG
+    org.springframework.cloud.netflix.zuul: DEBUG
+    org.springframework.boot.actuate: DEBUG
+    org.springframework.security: DEBUG
+    org.springframework.cloud.gateway: DEBUG
+  pattern:
+    console: "%clr(%d{${LOG_DATEFORMAT_PATTERN:HH:mm:ss.SSS}}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}"
+

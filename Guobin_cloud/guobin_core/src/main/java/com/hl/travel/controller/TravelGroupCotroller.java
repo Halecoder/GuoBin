@@ -16,7 +16,6 @@ import java.util.List;
  */
 @RequestMapping("/travelGroup")
 @RestController
-@CrossOrigin
 //@Tag(name = "跟团游相关接口")
 public class TravelGroupCotroller {
 

@@ -177,5 +177,7 @@
         <module>guobin_upload</module>
         <module>guobin_job</module>
         <module>gateway_server</module>
+        <module>guobin_oauth</module>
+        <module>guobin_role</module>
     </modules>
 </project>

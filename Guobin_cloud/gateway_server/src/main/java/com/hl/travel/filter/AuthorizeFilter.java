@@ -20,8 +20,8 @@ public class AuthorizeFilter implements GlobalFilter {
         MultiValueMap<String, String> params = exchange.getRequest().getQueryParams();
         // 2.校验请求的URL的后缀是否为.do
         String path = exchange.getRequest().getPath().toString();
-        // 3.校验
-        if (!path.endsWith(".do")) {  // 配置文件重写成功 先执行配置文件的断言，才执行这里的代码 所以这里占个位，没用
+        // 3.校验 login.do
+        if (!path.endsWith(".do") || path.endsWith("login.do") || path.endsWith("logout.do")) {  // 配置文件重写成功 先执行配置文件的断言，才执行这里的代码 所以这里占个位，没用
 
             // 放行
             return chain.filter(exchange);

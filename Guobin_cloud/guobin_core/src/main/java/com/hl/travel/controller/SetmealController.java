@@ -28,7 +28,7 @@ import java.util.UUID;
 /**
  * 套餐管理
  */
-@CrossOrigin
+
 @RestController
 @RequestMapping("/setmeal")
 public class SetmealController {

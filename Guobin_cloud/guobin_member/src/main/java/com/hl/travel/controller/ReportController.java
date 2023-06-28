@@ -31,7 +31,7 @@ import java.util.*;
 /**
  * 报表控制器
  */
-@CrossOrigin
+
 @RequestMapping("/report")
 @RestController
 public class ReportController {

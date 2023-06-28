@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 /**
  * 自由行管理
  */
-@CrossOrigin //跨域
 @RestController
 @RequestMapping(value = "/travelItem")
 //@Tag(name = "自由行相关接口")

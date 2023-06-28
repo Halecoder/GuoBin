@@ -18,7 +18,7 @@ import java.util.Map;
  * 移动端预约
  */
 @RestController
-@CrossOrigin
+
 @RequestMapping("/order")
 //@Tag(name = "移动端预约相关接口")
 public class OrderMobileController {

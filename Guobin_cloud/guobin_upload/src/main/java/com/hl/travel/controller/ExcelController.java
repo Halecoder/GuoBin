@@ -20,7 +20,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/excel")
-@CrossOrigin
+
 public class ExcelController {
 
 

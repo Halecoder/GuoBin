@@ -21,7 +21,7 @@ import java.util.Map;
  * 后台预约设置
  */
 @RestController
-@CrossOrigin
+
 @RequestMapping("/orderSetting")
 //@Tag(name = "后台预约设置相关接口")
 public class OrderSettingController {

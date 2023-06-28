@@ -19,7 +19,7 @@ import java.util.Map;
  *  前台登录
  */
 @RestController
-@CrossOrigin
+
 @RequestMapping("/login")
 //@Tag(name = "前台登录相关接口")
 public class LoginController {

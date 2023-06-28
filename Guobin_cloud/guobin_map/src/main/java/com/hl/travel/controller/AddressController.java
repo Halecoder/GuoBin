@@ -20,7 +20,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/address")
-@CrossOrigin
+
 //@Tag(name = "百度地图相关接口")
 public class AddressController {
 
