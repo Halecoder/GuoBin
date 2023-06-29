@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -16,14 +17,21 @@ import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.session.NullAuthenticatedSessionStrategy;
+import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
+import org.springframework.session.FindByIndexNameSessionRepository;
+import org.springframework.session.Session;
+import org.springframework.session.security.SpringSessionBackedSessionRegistry;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
@@ -35,6 +43,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private com.hl.travel.security.SpringSecurityUserService SpringSecurityUserService;
 
+    @Autowired
+    private com.hl.travel.security.SecurityLogoutSuccessHandler SecurityLogoutSuccessHandler;
+
+//    //RedisOperationsSessionRepository
+//    @Autowired
+//    private FindByIndexNameSessionRepository mySessionRepository;
+//
+//    // 是session为Spring Security提供的
+//    // 用于在集群环境下控制会话并发的会话注册表实现
+//    @Bean
+//    public SpringSessionBackedSessionRegistry sessionRegistry(){
+//        return new SpringSessionBackedSessionRegistry(mySessionRepository);
+//    }
+
+
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -45,6 +69,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .cors()//跨域
                 .configurationSource(corsConfigurationSource())  // 网关已经配置了跨域
+                .disable()
+//                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 不创建session
                 .and()
                 .authorizeRequests()
                 // 其他请求配置
@@ -62,37 +90,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .successHandler(loginSuccessHandler()) // 使用自定义的登录成功处理器
                 .failureUrl(MessageConstant.LOGIN_SUCCESS_URL+"/login.html")// 登录失败后跳转的url
                 .and()
+//                .exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler())//权限不足处理器
                 .logout()
                 .logoutUrl("/logout.do") // 退出登录拦截的url
-                .logoutSuccessUrl(MessageConstant.LOGIN_SUCCESS_URL+"/login.html") // 退出登录成功后跳转的url
-                .and()
-//                .exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler())//权限不足处理器
-//                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                .invalidSessionUrl(MessageConstant.LOGIN_SUCCESS_URL+"/login.html")//session失效后跳转的url
-                .maximumSessions(1)//同一账号同时登录最大用户数
-                .maxSessionsPreventsLogin(false) // 允许新会话替换旧会话
-                .sessionRegistry(sessionRegistry());// 使用Redis存储会话信息
+//                // 退出登录删除指定的cookie
+                .deleteCookies("TOKEN","SESSION")
+                .logoutSuccessHandler(SecurityLogoutSuccessHandler);// 退出登录成功后的处理器
+
     }
 
 
-    /**
-     * 解决session失效后 sessionRegistry中session没有同步失效的问题，启用并发session控制，首先需要在配置中增加下面监听器
-     * @return
-     */
-    @Bean
-    public HttpSessionEventPublisher httpSessionEventPublisher() {
-        return new HttpSessionEventPublisher();
-    }
-
-    /**
-     * 注册bean sessionRegistry
-     */
-    @Bean
-    public SessionRegistry sessionRegistry() {
-        return new SessionRegistryImpl();
-    }
 
 
     @Override
@@ -111,9 +118,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
 
                 // 自定义登录成功后的处理逻辑
+                // 创建会话
+                HttpSession session = request.getSession();
+                // 获取会话ID
+                String sessionId = session.getId();
 
-                // 多个ALOWED_ORIGIN时，需要在此处设置响应头
+                // 创建包含会话ID的Cookie
+                Cookie sessionCookie = new Cookie("TOKEN", sessionId);
+                sessionCookie.setPath("/");
 
+                // 将Cookie添加到响应中
+                response.addCookie(sessionCookie);
                 response.sendRedirect(MessageConstant.LOGIN_SUCCESS_URL+"/pages/main.html");
             }
         };

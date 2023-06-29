@@ -3,6 +3,26 @@ server:
 spring:
   application:
     name: gateway-server # 服务名称
+  # 配置Redis
+  redis:
+    host: localhost
+    port: 6379
+    jedis:
+      pool:
+        max-active: 100
+        max-idle: 20
+        min-idle: 5
+    timeout: 10000
+    password:
+
+  session:
+    timeout: 1800 # session过期时间
+
+  main:
+    allow-bean-definition-overriding: true
+
+
+
   cloud:
     gateway:
       globalcors:
