@@ -10,3 +10,4 @@ feign:
     enabled: false
   httpclient:
     connection-timeout: 30000
+    enabled: true
