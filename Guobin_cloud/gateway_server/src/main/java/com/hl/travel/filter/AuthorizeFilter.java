@@ -1,7 +1,7 @@
 package com.hl.travel.filter;
 
 
-import com.hl.travel.config.RedisSessionConfig;
+import com.hl.travel.model.dao.RedisDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -30,14 +30,10 @@ import java.util.concurrent.ExecutionException;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @Component
-@Import(RedisSessionConfig.class)
 public class AuthorizeFilter implements GlobalFilter {
 
-//    @Autowired
-//    private RedisTemplate<String, Object> redisTemplate;
-//
-//    @Autowired
-//    private RedisOperationsSessionRepository sessionRepository;
+    @Autowired
+    private RedisDao<String,String> sessionRedis;
 
 
     @Override
@@ -47,15 +43,6 @@ public class AuthorizeFilter implements GlobalFilter {
         // 2.校验请求的URL的后缀是否为.do
         String path = exchange.getRequest().getPath().toString();
 
-
-
-        try {
-            WebSession session = exchange.getSession().toFuture().get();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        } catch (ExecutionException e) {
-            throw new RuntimeException(e);
-        }
 
         String sessionId = "";
         String sessionKey = "";
@@ -67,9 +54,9 @@ public class AuthorizeFilter implements GlobalFilter {
         MultiValueMap<String, HttpCookie> cookies = request.getCookies();
 
         // 获取名为"SESSION"的Cookie
-        List<HttpCookie> sessionCookies = cookies.get("SESSION");
+        List<HttpCookie> sessionCookies = cookies.get("TOKEN");
 
-        if (sessionCookies != null && !sessionCookies.isEmpty()) {
+        if (sessionCookies != null) {
             // 获取第一个SESSION Cookie的值
             sessionId = sessionCookies.get(0).getValue();
              sessionKey ="spring:session:sessions:" + sessionId;
@@ -83,7 +70,7 @@ public class AuthorizeFilter implements GlobalFilter {
             return chain.filter(exchange);
         } else {
 
-            if (sessionId != null) {
+            if (sessionRedis.hasKey(sessionKey)) {
                 // 会话有效，放行请求
                 return chain.filter(exchange);
             } else {
@@ -99,26 +86,6 @@ public class AuthorizeFilter implements GlobalFilter {
 
 
     }
-
-//    private boolean isSessionValid(String sessionId) {
-//        // 在这里编写逻辑，根据sessionId从Redis中验证会话是否有效
-//        // 如果会话有效，返回true；否则返回false
-//        // 您可以使用Spring Session的API来检查会话的有效性
-//        // 通过sessionId从Redis中获取会话
-//        // 例如，通过注入RedisOperationsSessionRepository并调用findById方法
-//        Session session = sessionRepository.findById(sessionId);
-//        // 来获取会话并进行相应的验证逻辑
-//        // 检查会话是否存在且有效
-//        if (session != null && !session.isExpired()) {
-//            // 会话有效
-//            return true;
-//        } else {
-//            // 会话无效
-//            return false;
-//        }
-//
-//
-//    }
 
 
 

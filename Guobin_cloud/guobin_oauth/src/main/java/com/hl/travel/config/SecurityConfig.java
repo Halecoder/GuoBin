@@ -46,17 +46,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private com.hl.travel.security.SecurityLogoutSuccessHandler SecurityLogoutSuccessHandler;
 
-//    //RedisOperationsSessionRepository
-//    @Autowired
-//    private FindByIndexNameSessionRepository mySessionRepository;
-//
-//    // 是session为Spring Security提供的
-//    // 用于在集群环境下控制会话并发的会话注册表实现
-//    @Bean
-//    public SpringSessionBackedSessionRegistry sessionRegistry(){
-//        return new SpringSessionBackedSessionRegistry(mySessionRepository);
-//    }
-
 
 
 
