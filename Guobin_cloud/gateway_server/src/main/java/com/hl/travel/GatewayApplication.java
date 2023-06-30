@@ -12,7 +12,10 @@ import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.session.data.redis.RedisOperationsSessionRepository;
 import org.springframework.session.data.redis.config.annotation.web.server.EnableRedisWebSession;
 
-@SpringBootApplication(exclude= {DataSourceAutoConfiguration.class})
+@SpringBootApplication(exclude= {
+        DataSourceAutoConfiguration.class,
+        org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration.class
+})
 public class GatewayApplication {
 
     public static void main(String[] args) {
