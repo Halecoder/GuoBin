@@ -2,6 +2,7 @@ package com.hl.travel.security;
 
 
 import com.hl.travel.clients.GuobinRoleClient;
+import com.hl.travel.model.dao.RedisDao;
 import com.hl.travel.model.pojo.Permission;
 import com.hl.travel.model.pojo.Role;
 import com.hl.travel.model.pojo.User;
@@ -23,8 +24,10 @@ public class SpringSecurityUserService implements UserDetailsService {
     @Autowired
     private GuobinRoleClient guobinRoleClient;
 
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
         User user = guobinRoleClient.findUserByUserName(username);
 
         if (user == null) {

@@ -1,6 +1,7 @@
 package com.hl.travel.config;
 
 import com.hl.travel.constant.MessageConstant;
+import com.hl.travel.model.dao.RedisDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +18,7 @@ import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.session.NullAuthenticatedSessionStrategy;
 import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
@@ -44,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private com.hl.travel.security.SpringSecurityUserService SpringSecurityUserService;
 
     @Autowired
-    private com.hl.travel.security.SecurityLogoutSuccessHandler SecurityLogoutSuccessHandler;
+    RedisDao redisDao;
 
 
 
@@ -61,7 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
 //                .and()
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 不创建session
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED) // 不创建session
                 .and()
                 .authorizeRequests()
                 // 其他请求配置
@@ -84,11 +86,33 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutUrl("/logout.do") // 退出登录拦截的url
 //                // 退出登录删除指定的cookie
                 .deleteCookies("TOKEN","SESSION")
-                .logoutSuccessHandler(SecurityLogoutSuccessHandler);// 退出登录成功后的处理器
+                .logoutSuccessHandler(LogoutSuccessHandler());// 退出登录成功后的处理器
 
     }
 
+    @Bean
+    public LogoutSuccessHandler LogoutSuccessHandler() {
+        return new LogoutSuccessHandler() {
+            @Override
+            public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+                // 自定义退出登录成功后的处理逻辑
+                HttpSession session = request.getSession();
 
+                // 手动让中的session失效 。
+                session.invalidate();
+
+                String sessionId = request.getSession().getId();  // 假设从请求中获取到session ID
+
+                String sessionKey = "spring:session:sessions:" + sessionId;
+
+                // 删除redis中的session
+                redisDao.del(sessionKey);
+
+                // 重定向到登录页面
+                response.sendRedirect(MessageConstant.LOGIN_SUCCESS_URL+"/login.html");
+            }
+        };
+    }
 
 
     @Override

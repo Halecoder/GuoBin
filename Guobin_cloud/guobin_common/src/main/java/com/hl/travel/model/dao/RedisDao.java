@@ -1,12 +1,15 @@
 package com.hl.travel.model.dao;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.session.data.redis.RedisOperationsSessionRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
 
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -23,6 +26,8 @@ public class RedisDao<K,V> {
 
 
     private final RedisTemplate<K, V> redisTemplate;
+
+
 
     /**
      * 判断key是否存在
@@ -67,6 +72,13 @@ public class RedisDao<K,V> {
     public V getValue(K key){
         ValueOperations<K, V> ops = this.redisTemplate.opsForValue();
         return ops.get(key);
+    }
+
+    public Map<Object, Object> getHash(K key) {
+
+        Map<Object, Object> sessionData = this.redisTemplate.opsForHash().entries(key);
+        return sessionData;
+
     }
 
     /**
